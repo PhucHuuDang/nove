@@ -17,5 +17,12 @@ This will place the ui components in the `components` directory.
 To use the components in your app, import them as follows:
 
 ```tsx
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 ```
+
+## Commit Conventions & Contributing
+
+This project enforces [Conventional Commits](https://www.conventionalcommits.org/) via **Commitlint**, **Husky**, and **lint-staged**.
+
+- See [CONTRIBUTING.md](CONTRIBUTING.md) for full commit and branching guidelines.
+- To use an interactive commit CLI wizard: `npm run commit`
