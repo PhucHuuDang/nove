@@ -26,3 +26,10 @@ This project enforces [Conventional Commits](https://www.conventionalcommits.org
 
 - See [CONTRIBUTING.md](CONTRIBUTING.md) for full commit and branching guidelines.
 - To use an interactive commit CLI wizard: `npm run commit`
+
+## Component Architecture & Standards
+
+To maintain scalability and clarity as agents generate code:
+
+- See [docs/COMPONENT_ARCHITECTURE.md](docs/COMPONENT_ARCHITECTURE.md) for directory layers (`ui/`, `shared/`, `features/`), 150-line limits, and composition rules.
+- See [clean-code-rules.md](clean-code-rules.md) for core software engineering principles.

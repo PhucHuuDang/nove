@@ -25,3 +25,23 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   - Run `npm run typecheck` to verify TypeScript types.
   - Run `npm run lint` for ESLint verification.
   - Pre-commit hooks (`lint-staged`) will automatically format and lint staged files.
+
+# Component Architecture & Generation Rules
+
+When creating or modifying components, strictly adhere to [docs/COMPONENT_ARCHITECTURE.md](docs/COMPONENT_ARCHITECTURE.md):
+
+1. **3-Layer Directory Structure**:
+   - `components/ui/`: Design system primitives only (shadcn/base-ui). Zero business logic.
+   - `components/shared/`: Cross-cutting reusable UI components (e.g. `theme-toggle.tsx`, `empty-state.tsx`).
+   - `components/features/<feature>/`: Self-contained feature modules (e.g. `features/auth/`, `features/billing/`).
+   - `app/`: Next.js routes and layouts. Keep pages thin and compose feature components.
+
+2. **Clean Code & Performance Constraints**:
+   - **File Size**: Max ~150 lines per component. Decompose larger components into focused sub-components.
+   - **No Inline Components**: Never define a component inside another component body (`rerender-no-inline-components`).
+   - **No Barrel Imports**: Always import directly from individual module files (e.g. `@/components/ui/button`, never `@/components`).
+   - **RSC by Default**: Keep components as React Server Components unless interactivity/hooks are required; push `"use client"` to the smallest possible leaf components.
+   - **Composition over Boolean Props**: Favor compound components and `children` composition over endless boolean flags (`isCompact`, `hasIcon`, `showFooter`).
+   - **React 19 Conventions**: No `forwardRef` (pass `ref` directly as prop). Use `use()` instead of `useContext()`.
+   - **Safe Conditionals**: Use explicit ternary `condition ? <A /> : null` instead of `condition && <A />`.
+   - **Derive State in Render**: Compute values during render; do not use `useEffect` to sync derived state.
