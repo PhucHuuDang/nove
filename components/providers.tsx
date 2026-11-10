@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { CartProvider } from "@/lib/cart-context"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -9,9 +10,11 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <TooltipProvider>
-        <Toaster>{children}</Toaster>
-      </TooltipProvider>
+      <CartProvider>
+        <TooltipProvider>
+          <Toaster>{children}</Toaster>
+        </TooltipProvider>
+      </CartProvider>
     </ThemeProvider>
   )
 }

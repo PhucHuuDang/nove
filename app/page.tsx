@@ -1,19 +1,27 @@
-import { Button } from "@/components/ui/button"
+import { HomeHeroSection } from "@/components/features/home/hero-section"
+import { CoffeeTabsSection } from "@/components/features/home/coffee-tabs-section"
+import { MachineCompareSection } from "@/components/features/home/machine-compare-section"
+import { HomeDetailsSection } from "@/components/features/home/details-section"
+import { HomeReviewsSection } from "@/components/features/home/reviews-section"
+import { AboutBlurbSection } from "@/components/features/home/about-blurb-section"
+import { HomeCountersSection } from "@/components/features/home/counters-section"
+import { HomePricingCardsSection } from "@/components/features/home/pricing-cards-section"
+import { HomeFaqSection } from "@/components/features/home/faq-section"
+import { HomeContactCtaSection } from "@/components/features/home/contact-cta-section"
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+    <>
+      <HomeHeroSection />
+      <CoffeeTabsSection />
+      <MachineCompareSection />
+      <HomeDetailsSection />
+      <HomeReviewsSection />
+      <AboutBlurbSection />
+      <HomeCountersSection />
+      <HomePricingCardsSection />
+      <HomeFaqSection />
+      <HomeContactCtaSection />
+    </>
   )
 }
