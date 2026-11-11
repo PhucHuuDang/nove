@@ -14,8 +14,8 @@ export default function HomePage() {
     <>
       <HomeHeroSection />
       <CoffeeTabsSection />
-      <MachineCompareSection />
       <HomeDetailsSection />
+      <MachineCompareSection />
       <HomeReviewsSection />
       <AboutBlurbSection />
       <HomeCountersSection />

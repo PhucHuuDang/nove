@@ -24,8 +24,9 @@ test.describe("Home Page", () => {
     await expect(page.getByText("Three machines. Same espresso.")).toBeVisible()
 
     // Check engineering details section
+    await expect(page.getByText("Why the espresso tastes better")).toBeVisible()
     await expect(
-      page.getByText("Built like a commercial machine, sized for a kitchen.")
+      page.getByRole("heading", { name: "Less bitter coffee" })
     ).toBeVisible()
 
     // Check pricing cards
