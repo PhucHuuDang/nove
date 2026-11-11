@@ -20,8 +20,8 @@ test.describe("Home Page", () => {
       page.getByRole("link", { name: /Latte/i }).first()
     ).toBeVisible()
 
-    // Check machine compare section
-    await expect(page.getByText("Three machines. Same espresso.")).toBeVisible()
+    // Check three models section
+    await expect(page.getByText("Pick by what you drink")).toBeVisible()
 
     // Check engineering details section
     await expect(page.getByText("Why the espresso tastes better")).toBeVisible()

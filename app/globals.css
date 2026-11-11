@@ -7,6 +7,7 @@
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
+  --color-success: var(--success);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -67,6 +68,7 @@
   --input: lab(7.22121% 0.833631 1.86806 / 0.15);
   --ring: lab(7.22121% 0.833631 1.86806);
   --radius: 0.75rem;
+  --success: lab(43.2686% -30.0935 19.7304);
   --chart-1: lab(90.1599% 1.05226 4.45017);
   --chart-2: lab(76.806% 2.63536 8.00381);
   --chart-3: lab(7.22121% 0.833631 1.86806);
@@ -97,6 +99,7 @@
   --muted-foreground: lab(65% 0 0);
   --accent: lab(96.7639% 0.224769 1.5044);
   --accent-foreground: lab(7.22121% 0.833631 1.86806);
+  --success: lab(73.7023% -35.9264 23.3569);
   --destructive: lab(46.2125% 58.1692 41.3954);
   --border: lab(96.7639% 0.224769 1.5044 / 0.14);
   --input: lab(96.7639% 0.224769 1.5044 / 0.2);
@@ -136,15 +139,19 @@
 }
 
 @utility gutter-3 {
-  padding-inline: 0.75rem;
-}
-
-@utility gutter-3 {
   padding-inline: calc(var(--bleed, 0px) + 0.75rem);
 }
 
 @utility gutter-5 {
   padding-inline: calc(var(--bleed, 0px) + 1.25rem);
+}
+
+@utility gutter-margin-2 {
+  margin-inline: calc(var(--bleed, 0px) + 0.5rem);
+}
+
+@utility gutter-margin-3 {
+  margin-inline: calc(var(--bleed, 0px) + 0.75rem);
 }
 
 @utility section-padding {
