@@ -30,7 +30,8 @@ export function FaqBoxCard() {
       </h3>
       <p className="mt-2 px-5 pb-6 text-sm leading-relaxed text-muted-foreground md:px-6">
         The machine, a portafilter with two baskets, a tamper and the power
-        lead. The Duo and the Pro also come with a milk jug.
+        lead. The portafilter is the handle that holds the coffee. The Duo and
+        the Pro also come with a milk jug.
       </p>
     </ScrollReveal>
   )

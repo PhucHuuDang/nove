@@ -8,21 +8,22 @@ export function HomeAddonsSection() {
       className="overflow-x-clip gutter-3 section-padding md:gutter-5"
       aria-labelledby="addons-heading"
     >
-      <ScrollReveal className="flex flex-col items-center text-center">
-        <header>
-          <p className="text-sm font-medium text-muted-foreground">
-            {ADDONS_DATA.eyebrow}
-          </p>
-          <h2
-            className="mt-3 text-4xl leading-[1.05] md:text-5xl lg:text-6xl"
-            id="addons-heading"
-          >
-            {ADDONS_DATA.heading}
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
-            {ADDONS_DATA.lede}
-          </p>
-        </header>
+      <ScrollReveal
+        as="header"
+        className="flex flex-col items-center text-center"
+      >
+        <p className="text-sm font-medium text-muted-foreground">
+          {ADDONS_DATA.eyebrow}
+        </p>
+        <h2
+          className="mt-3 text-4xl leading-[1.05] md:text-5xl lg:text-6xl"
+          id="addons-heading"
+        >
+          {ADDONS_DATA.heading}
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
+          {ADDONS_DATA.lede}
+        </p>
       </ScrollReveal>
 
       <ScrollReveal

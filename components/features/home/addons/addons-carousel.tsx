@@ -140,7 +140,9 @@ export function AddonsCarousel() {
 
       <div
         aria-hidden="true"
-        className="col-start-1 row-start-2 mt-6 mr-6 h-0.5 overflow-hidden bg-foreground/10 md:col-span-2 md:row-start-3 md:-mx-5 md:mt-10"
+        className={`col-start-1 row-start-2 mt-6 mr-6 h-0.5 overflow-hidden bg-foreground/10 md:col-span-2 md:row-start-3 md:-mx-5 md:mt-10 ${
+          !scrollState.overflow ? "hidden" : ""
+        }`}
       >
         <div
           className="h-full origin-left bg-foreground motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-soft"
