@@ -1,24 +1,21 @@
 "use client"
 
-import { useState } from "react"
 import { Truck, RefreshCw, ShieldCheck } from "lucide-react"
 import { ScrollReveal } from "@/components/shared/scroll-reveal"
-import {
-  MACHINE_PAGES_DATA,
-  type MachinePageData,
-} from "@/lib/data/product-pages-data"
+import { MACHINE_PAGES_DATA } from "@/lib/data/product-pages-data"
 import { ProductBottomCtaModels } from "./product-bottom-cta-models"
 import { ProductBottomCtaCard } from "./product-bottom-cta-card"
 
 interface ProductBottomCtaSectionProps {
-  data: MachinePageData
+  currentSlug: "one" | "duo" | "pro"
+  onSelectModel: (slug: "one" | "duo" | "pro") => void
 }
 
 export function ProductBottomCtaSection({
-  data,
+  currentSlug,
+  onSelectModel,
 }: ProductBottomCtaSectionProps) {
-  const [activeSlug, setActiveSlug] = useState<"one" | "duo" | "pro">(data.slug)
-  const activeMachine = MACHINE_PAGES_DATA[activeSlug] || data
+  const activeMachine = MACHINE_PAGES_DATA[currentSlug]
 
   return (
     <section
@@ -78,8 +75,8 @@ export function ProductBottomCtaSection({
 
         {/* Column 2: All three models picker */}
         <ProductBottomCtaModels
-          currentSlug={activeSlug}
-          onSelect={setActiveSlug}
+          currentSlug={currentSlug}
+          onSelect={onSelectModel}
         />
 
         {/* Column 3: Buy Card */}

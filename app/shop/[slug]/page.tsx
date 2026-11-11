@@ -4,12 +4,7 @@ import { notFound } from "next/navigation"
 import { allProducts, getProductBySlug } from "@/lib/data/products"
 import { MACHINE_PAGES_DATA } from "@/lib/data/product-pages-data"
 import { ProductNavSpacer } from "@/components/features/product/product-nav-spacer"
-import { ProductHero } from "@/components/features/product/hero/product-hero"
-import { ProductWhySection } from "@/components/features/product/why/product-why-section"
-import { ProductInBoxSection } from "@/components/features/product/box/product-in-box-section"
-import { ProductOwnersSection } from "@/components/features/product/owners/product-owners-section"
-import { ProductFaqSection } from "@/components/features/product/faq/product-faq-section"
-import { ProductBottomCtaSection } from "@/components/features/product/bottom-cta/product-bottom-cta-section"
+import { ProductMachineView } from "@/components/features/product/product-machine-view"
 import { ProductAccessoryView } from "@/components/features/product/accessory/product-accessory-view"
 
 interface ProductPageProps {
@@ -48,15 +43,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   if (machineData) {
     return (
-      <>
-        <ProductNavSpacer />
-        <ProductHero data={machineData} />
-        <ProductWhySection why={machineData.why} />
-        <ProductInBoxSection items={machineData.inBox} />
-        <ProductOwnersSection owners={machineData.owners} />
-        <ProductFaqSection questions={machineData.questions} />
-        <ProductBottomCtaSection data={machineData} />
-      </>
+      <ProductMachineView
+        initialSlug={machineData.slug as "one" | "duo" | "pro"}
+      />
     )
   }
 

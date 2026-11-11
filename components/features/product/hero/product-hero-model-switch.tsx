@@ -1,11 +1,11 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { motion } from "motion/react"
 import { cn } from "@/lib/utils"
 
 interface ProductHeroModelSwitchProps {
   currentSlug: "one" | "duo" | "pro"
+  onSelect: (slug: "one" | "duo" | "pro") => void
 }
 
 const MODELS = [
@@ -14,11 +14,16 @@ const MODELS = [
   { slug: "pro", label: "Pro" },
 ] as const
 
+const PILL_SPRING = {
+  type: "spring" as const,
+  duration: 0.4,
+  bounce: 0.15,
+}
+
 export function ProductHeroModelSwitch({
   currentSlug,
+  onSelect,
 }: ProductHeroModelSwitchProps) {
-  const router = useRouter()
-
   return (
     <div
       role="radiogroup"
@@ -43,7 +48,7 @@ export function ProductHeroModelSwitch({
             data-state={isActive ? "on" : "off"}
             onClick={() => {
               if (!isActive) {
-                router.push(`/shop/${model.slug}`, { scroll: false })
+                onSelect(model.slug)
               }
             }}
             className={cn(
@@ -58,12 +63,7 @@ export function ProductHeroModelSwitch({
                 layoutId="product-hero-active-model-pill"
                 aria-hidden="true"
                 className="absolute inset-0 -z-10 rounded-full bg-popover shadow-sm"
-                transition={{
-                  type: "spring",
-                  stiffness: 500,
-                  damping: 38,
-                  mass: 0.8,
-                }}
+                transition={PILL_SPRING}
               />
             ) : null}
             {model.label}

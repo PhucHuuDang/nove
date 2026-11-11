@@ -1,18 +1,25 @@
 "use client"
 
 import Link from "next/link"
-import { motion, AnimatePresence } from "motion/react"
 import { ChevronRight, Truck, RefreshCw, ShieldCheck } from "lucide-react"
-import type { MachinePageData } from "@/lib/data/product-pages-data"
+import { MACHINE_PAGES_DATA } from "@/lib/data/product-pages-data"
 import { ProductHeroModelSwitch } from "./product-hero-model-switch"
 import { ProductHeroAddToBag } from "./product-hero-add-to-bag"
 import { ProductHeroThumbnail } from "./product-hero-thumbnail"
+import { ProductHeroRollingText } from "./product-hero-rolling-text"
+import { ProductHeroFadeText } from "./product-hero-fade-text"
 
 interface ProductHeroInfoProps {
-  data: MachinePageData
+  currentSlug: "one" | "duo" | "pro"
+  onSelectModel: (slug: "one" | "duo" | "pro") => void
 }
 
-export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
+export function ProductHeroInfo({
+  currentSlug,
+  onSelectModel,
+}: ProductHeroInfoProps) {
+  const currentData = MACHINE_PAGES_DATA[currentSlug]
+
   return (
     <div className="flex flex-col rounded-3xl bg-background py-5 gutter-start-5 pe-5 md:py-8 md:gutter-start-8 md:pe-8 lg:min-h-0 lg:justify-between lg:py-10 lg:gutter-start-10 lg:pe-10 xl:py-12 xl:gutter-start-12 xl:pe-12">
       {/* Breadcrumb */}
@@ -40,7 +47,7 @@ export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
               aria-current="page"
               className="font-normal text-foreground"
             >
-              {data.name}
+              {currentData.name}
             </span>
           </li>
         </ol>
@@ -56,42 +63,40 @@ export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
           }}
         >
           Nove <br />
-          <span className="relative inline-flex overflow-hidden">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <motion.span
-                key={data.slug}
-                initial={{ y: "100%", opacity: 0, filter: "blur(2px)" }}
-                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ y: "-100%", opacity: 0, filter: "blur(2px)" }}
-                transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
-                className="inline-block"
-              >
-                {data.shortName}
-              </motion.span>
-            </AnimatePresence>
-          </span>
+          <ProductHeroRollingText value={currentData.shortName} />
         </h1>
-        <div className="mt-4 grid lg:mt-5">
-          <p className="text-lg md:text-xl 2xl:text-2xl">{data.tagline}</p>
-        </div>
-        <div className="mt-2 grid max-w-sm lg:hidden xl:grid 2xl:max-w-md">
-          <p className="text-sm text-muted-foreground 2xl:text-base">
-            {data.description}
+        <ProductHeroFadeText
+          value={currentData.tagline}
+          className="mt-4 lg:mt-5"
+        >
+          <p className="text-lg md:text-xl 2xl:text-2xl">
+            {currentData.tagline}
           </p>
-        </div>
+        </ProductHeroFadeText>
+        <ProductHeroFadeText
+          value={currentData.description}
+          className="mt-2 max-w-sm lg:hidden xl:grid 2xl:max-w-md"
+        >
+          <p className="text-sm text-muted-foreground 2xl:text-base">
+            {currentData.description}
+          </p>
+        </ProductHeroFadeText>
       </div>
 
       {/* Model Picker, Price, and Actions */}
       <div className="mt-10 flex items-end justify-between gap-4 lg:mt-0">
         <div className="min-w-0">
-          <ProductHeroModelSwitch currentSlug={data.slug} />
+          <ProductHeroModelSwitch
+            currentSlug={currentSlug}
+            onSelect={onSelectModel}
+          />
 
           <ProductHeroAddToBag
-            slug={data.slug}
-            name={data.name}
-            price={data.price}
-            priceFormatted={data.priceFormatted}
-            image={data.hero.thumbnail}
+            slug={currentData.slug}
+            name={currentData.name}
+            price={currentData.price}
+            priceFormatted={currentData.priceFormatted}
+            image={currentData.hero.thumbnail}
           />
 
           {/* Badges and Questions Link */}
@@ -126,7 +131,7 @@ export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
         </div>
 
         {/* Machine Preview Thumbnail */}
-        <ProductHeroThumbnail currentSlug={data.slug} />
+        <ProductHeroThumbnail currentSlug={currentSlug} />
       </div>
     </div>
   )
