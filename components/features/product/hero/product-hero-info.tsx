@@ -11,7 +11,7 @@ interface ProductHeroInfoProps {
 
 export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
   return (
-    <div className="gutter-start-5 md:gutter-start-8 lg:gutter-start-10 xl:gutter-start-12 flex flex-col rounded-3xl bg-background py-5 pe-5 md:py-8 md:pe-8 lg:min-h-0 lg:justify-between lg:py-10 lg:pe-10 xl:py-12 xl:pe-12">
+    <div className="flex flex-col rounded-3xl bg-background py-5 gutter-start-5 pe-5 md:py-8 md:gutter-start-8 md:pe-8 lg:min-h-0 lg:justify-between lg:py-10 lg:gutter-start-10 lg:pe-10 xl:py-12 xl:gutter-start-12 xl:pe-12">
       {/* Breadcrumb */}
       <nav aria-label="breadcrumb">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground sm:gap-2.5">
@@ -84,19 +84,19 @@ export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
           <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
             <ul className="flex flex-wrap gap-2">
               <li>
-                <span className="inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-foreground">
+                <span className="inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border py-0.5 ps-1.5 pe-2.5 text-xs font-medium text-foreground">
                   <Truck className="size-3" />
                   Free shipping
                 </span>
               </li>
               <li>
-                <span className="inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-foreground">
+                <span className="inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border py-0.5 ps-1.5 pe-2.5 text-xs font-medium text-foreground">
                   <RefreshCw className="size-3" />
                   30-day swap
                 </span>
               </li>
               <li>
-                <span className="inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-foreground">
+                <span className="inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border py-0.5 ps-1.5 pe-2.5 text-xs font-medium text-foreground">
                   <ShieldCheck className="size-3" />
                   3-year warranty
                 </span>
