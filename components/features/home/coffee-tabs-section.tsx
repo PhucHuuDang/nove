@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 
-import { SectionLabel } from "@/components/shared/section-label"
 import { cn } from "@/lib/utils"
 
 const BASE = "https://nove-nextjs-template.vercel.app"
@@ -64,12 +63,29 @@ export function CoffeeTabsSection() {
   const current = DRINKS[activeTab]
 
   return (
-    <section className="border-b border-border bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <SectionLabel>What you can make</SectionLabel>
+    <section
+      id="drinks"
+      aria-labelledby="drinks-heading"
+      className="overflow-x-clip gutter-3 pt-12 pb-16 md:gutter-5 md:pt-14 md:pb-24"
+    >
+      <div className="mx-auto max-w-screen-xl">
+        <header className="flex max-w-md flex-col items-start">
+          <p className="text-sm font-medium text-muted-foreground">Drinks</p>
+          <h2
+            id="drinks-heading"
+            className="mt-3 text-4xl leading-[1.05] font-normal tracking-tight md:text-5xl lg:text-6xl"
+          >
+            What you can make
+          </h2>
+          <p className="mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
+            All three models make the same espresso. For milk drinks, get the
+            Duo or the Pro. They have a steam wand that heats and froths the
+            milk.
+          </p>
+        </header>
 
         {/* Tab Buttons */}
-        <div className="mt-6 flex flex-wrap gap-2 border-b border-border pb-4">
+        <div className="mt-8 flex flex-wrap gap-2 border-b border-border pb-4">
           {DRINKS.map((drink, idx) => (
             <button
               key={drink.id}
@@ -92,9 +108,9 @@ export function CoffeeTabsSection() {
             <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
               {current.ratio}
             </p>
-            <h2 className="text-3xl font-light tracking-tight text-foreground md:text-4xl">
+            <h3 className="text-3xl font-light tracking-tight text-foreground md:text-4xl">
               {current.name}
-            </h2>
+            </h3>
             <p className="text-base leading-relaxed text-muted-foreground">
               {current.description}
             </p>
