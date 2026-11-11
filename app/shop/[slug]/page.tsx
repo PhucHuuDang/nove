@@ -1,17 +1,16 @@
 import type { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { allProducts, getProductBySlug } from "@/lib/data/products"
-import { ProductHero } from "@/components/features/product/product-hero"
-import { ProductFeaturesGrid } from "@/components/features/product/product-features-grid"
-import { ProductInBox } from "@/components/features/product/product-in-box"
-import { ProductUseWith } from "@/components/features/product/product-use-with"
-import { ProductReviews } from "@/components/features/product/product-reviews"
-import { ProductFaq } from "@/components/features/product/product-faq"
-import { ProductStickyCta } from "@/components/features/product/product-sticky-cta"
-import { buttonVariants } from "@/components/ui/button"
+import { MACHINE_PAGES_DATA } from "@/lib/data/product-pages-data"
+import { ProductNavSpacer } from "@/components/features/product/product-nav-spacer"
+import { ProductHero } from "@/components/features/product/hero/product-hero"
+import { ProductWhySection } from "@/components/features/product/why/product-why-section"
+import { ProductInBoxSection } from "@/components/features/product/box/product-in-box-section"
+import { ProductOwnersSection } from "@/components/features/product/owners/product-owners-section"
+import { ProductFaqSection } from "@/components/features/product/faq/product-faq-section"
+import { ProductBottomCtaSection } from "@/components/features/product/bottom-cta/product-bottom-cta-section"
+import { ProductAccessoryView } from "@/components/features/product/accessory/product-accessory-view"
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
@@ -25,77 +24,51 @@ export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params
+  const machine = MACHINE_PAGES_DATA[slug as keyof typeof MACHINE_PAGES_DATA]
+  if (machine) {
+    return {
+      title: `${machine.name} · Nove`,
+      description: machine.description,
+    }
+  }
+
   const product = getProductBySlug(slug)
-  if (!product) return { title: "Product Not Found" }
+  if (!product) return { title: "Product Not Found · Nove" }
 
   return {
-    title: product.name,
+    title: `${product.name} · Nove`,
     description: product.description,
   }
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params
-  const product = getProductBySlug(slug)
+  const machineData =
+    MACHINE_PAGES_DATA[slug as keyof typeof MACHINE_PAGES_DATA]
 
+  if (machineData) {
+    return (
+      <>
+        <ProductNavSpacer />
+        <ProductHero data={machineData} />
+        <ProductWhySection why={machineData.why} />
+        <ProductInBoxSection items={machineData.inBox} />
+        <ProductOwnersSection owners={machineData.owners} />
+        <ProductFaqSection questions={machineData.questions} />
+        <ProductBottomCtaSection data={machineData} />
+      </>
+    )
+  }
+
+  const product = getProductBySlug(slug)
   if (!product) {
     notFound()
   }
 
   return (
     <>
-      <ProductHero product={product} />
-
-      {/* In-Use Lifestyle Shot with Overlay */}
-      {product.inUseImage ? (
-        <section className="relative aspect-16/9 w-full overflow-hidden border-b border-border bg-muted">
-          <Image
-            src={product.inUseImage}
-            alt={`${product.name} in use`}
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-          {product.bar && product.basketMm ? (
-            <div className="absolute bottom-6 left-6 rounded-full bg-background/80 px-4 py-2 backdrop-blur-md md:bottom-10 md:left-10">
-              <span className="font-mono text-xs md:text-sm">
-                {product.bar} bar · {product.basketMm} mm commercial basket
-              </span>
-            </div>
-          ) : null}
-        </section>
-      ) : null}
-
-      <ProductFeaturesGrid features={product.features} />
-      <ProductInBox items={product.inBox} />
-      <ProductUseWith items={product.useWith ?? []} />
-      <ProductReviews productName={product.name} />
-      <ProductFaq />
-
-      {/* Compare Models Banner */}
-      <section className="border-b border-border bg-background py-16 text-center">
-        <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-          <h2 className="text-2xl font-light tracking-tight md:text-3xl">
-            Compare all three machines
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Explore the differences between the One, Duo, and Pro.
-          </p>
-          <div className="mt-6">
-            <Link
-              href="/shop#compare"
-              className={buttonVariants({
-                variant: "outline",
-                size: "default",
-              })}
-            >
-              See full comparison table
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <ProductStickyCta product={product} />
+      <ProductNavSpacer />
+      <ProductAccessoryView product={product} />
     </>
   )
 }
