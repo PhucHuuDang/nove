@@ -1,34 +1,78 @@
-import { SectionLabel } from "@/components/shared/section-label"
-import { StarRating } from "@/components/shared/star-rating"
-import { ReviewsMarquee } from "@/components/shared/reviews-marquee"
-import { reviews, reviewStats } from "@/lib/data/reviews"
+import { ScrollReveal } from "@/components/shared/scroll-reveal"
+import { REVIEWS_SECTION_DATA } from "./reviews/reviews-data"
+import { ReviewCard } from "./reviews/review-card"
 
 export function HomeReviewsSection() {
-  const half = Math.ceil(reviews.length / 2)
-  const firstRow = reviews.slice(0, half)
-  const secondRow = reviews.slice(half)
+  const col1Duplicated = [
+    ...REVIEWS_SECTION_DATA.column1,
+    ...REVIEWS_SECTION_DATA.column1,
+  ]
+  const col2Duplicated = [
+    ...REVIEWS_SECTION_DATA.column2,
+    ...REVIEWS_SECTION_DATA.column2,
+  ]
+  const col3Duplicated = [
+    ...REVIEWS_SECTION_DATA.column3,
+    ...REVIEWS_SECTION_DATA.column3,
+  ]
 
   return (
-    <section className="overflow-hidden border-b border-border bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <SectionLabel>Reviews</SectionLabel>
-            <h2 className="mt-2 text-3xl font-light tracking-tight text-foreground md:text-5xl">
-              1,284 Nove owners in their kitchens
+    <section
+      className="px-3 section-padding md:px-5"
+      aria-labelledby="reviews-heading"
+    >
+      <div className="dark rounded-3xl bg-background panel-padding text-foreground">
+        <ScrollReveal className="flex flex-col items-center text-center">
+          <header>
+            <p className="text-sm font-medium text-muted-foreground">
+              {REVIEWS_SECTION_DATA.eyebrow}
+            </p>
+            <h2
+              className="mt-3 text-4xl leading-[1.05] md:text-5xl lg:text-6xl"
+              id="reviews-heading"
+            >
+              {REVIEWS_SECTION_DATA.heading}
             </h2>
-          </div>
-          <StarRating
-            rating={reviewStats.rating}
-            reviewsCount={reviewStats.count}
-            avatars={reviewStats.avatars}
-          />
-        </div>
-      </div>
+            <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
+              {REVIEWS_SECTION_DATA.lede}
+            </p>
+          </header>
+        </ScrollReveal>
 
-      <div className="mt-12 space-y-4">
-        <ReviewsMarquee reviews={firstRow} />
-        <ReviewsMarquee reviews={secondRow} reverse />
+        <ScrollReveal
+          delayMs={100}
+          className="group mt-10 grid h-208 gap-5 overflow-hidden mask-y-from-85% md:mt-14 md:grid-cols-2 xl:grid-cols-3"
+        >
+          <div>
+            <ul className="animate-scroll-up flex flex-col gap-5 pb-5 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+              {col1Duplicated.map((review, idx) => (
+                <li key={`col1-${review.id}-${idx}`}>
+                  <ReviewCard review={review} />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="max-md:hidden">
+            <ul className="animate-scroll-down flex flex-col gap-5 pb-5 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+              {col2Duplicated.map((review, idx) => (
+                <li key={`col2-${review.id}-${idx}`}>
+                  <ReviewCard review={review} />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="max-xl:hidden">
+            <ul className="animate-scroll-up flex flex-col gap-5 pb-5 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+              {col3Duplicated.map((review, idx) => (
+                <li key={`col3-${review.id}-${idx}`}>
+                  <ReviewCard review={review} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )
