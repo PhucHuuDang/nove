@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { motion, AnimatePresence } from "motion/react"
 import { useCart } from "@/lib/cart-context"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -52,9 +53,18 @@ export function ProductHeroAddToBag({
     <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
       <p className="font-mono text-3xl figures 2xl:text-4xl">
         <span className="relative inline-flex overflow-hidden">
-          <span className="inline-block">
-            {formatMonospacePrice(priceFormatted)}
-          </span>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span
+              key={slug}
+              initial={{ y: "100%", opacity: 0, filter: "blur(2px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: "-100%", opacity: 0, filter: "blur(2px)" }}
+              transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
+              className="inline-block"
+            >
+              {formatMonospacePrice(priceFormatted)}
+            </motion.span>
+          </AnimatePresence>
         </span>
       </p>
       <button

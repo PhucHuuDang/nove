@@ -1,9 +1,12 @@
+"use client"
+
 import Link from "next/link"
-import Image from "next/image"
+import { motion, AnimatePresence } from "motion/react"
 import { ChevronRight, Truck, RefreshCw, ShieldCheck } from "lucide-react"
 import type { MachinePageData } from "@/lib/data/product-pages-data"
 import { ProductHeroModelSwitch } from "./product-hero-model-switch"
 import { ProductHeroAddToBag } from "./product-hero-add-to-bag"
+import { ProductHeroThumbnail } from "./product-hero-thumbnail"
 
 interface ProductHeroInfoProps {
   data: MachinePageData
@@ -54,7 +57,18 @@ export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
         >
           Nove <br />
           <span className="relative inline-flex overflow-hidden">
-            <span className="inline-block">{data.shortName}</span>
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.span
+                key={data.slug}
+                initial={{ y: "100%", opacity: 0, filter: "blur(2px)" }}
+                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                exit={{ y: "-100%", opacity: 0, filter: "blur(2px)" }}
+                transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
+                className="inline-block"
+              >
+                {data.shortName}
+              </motion.span>
+            </AnimatePresence>
           </span>
         </h1>
         <div className="mt-4 grid lg:mt-5">
@@ -112,28 +126,7 @@ export function ProductHeroInfo({ data }: ProductHeroInfoProps) {
         </div>
 
         {/* Machine Preview Thumbnail */}
-        <div className="aspect-square w-24 shrink-0 md:w-32 lg:w-28 xl:w-36 2xl:w-44">
-          <div className="relative z-10 size-full">
-            <div
-              className="absolute bottom-0 left-1/2 max-w-full -translate-x-1/2"
-              style={{
-                height: data.hero.heightPercent,
-                aspectRatio: data.hero.aspectRatio,
-              }}
-            >
-              <div className="absolute inset-x-[6%] bottom-0 h-[8%] translate-y-1/2 rounded-full bg-foreground/15 blur-xl" />
-              <div className="relative size-full">
-                <Image
-                  src={data.hero.thumbnail}
-                  alt={data.hero.thumbnailAlt}
-                  fill
-                  sizes="(min-width: 64rem) 30vw, 70vw"
-                  className="size-full object-contain object-bottom"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProductHeroThumbnail currentSlug={data.slug} />
       </div>
     </div>
   )
