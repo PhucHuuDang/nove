@@ -1,8 +1,13 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import { Plus, Minus } from "lucide-react"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion"
 import { ScrollReveal } from "@/components/shared/scroll-reveal"
 import type { MachinePageData } from "@/lib/data/product-pages-data"
 
@@ -11,12 +16,6 @@ interface ProductFaqSectionProps {
 }
 
 export function ProductFaqSection({ questions }: ProductFaqSectionProps) {
-  const [openIdx, setOpenIdx] = useState<number | null>(0)
-
-  const toggle = (idx: number) => {
-    setOpenIdx((current) => (current === idx ? null : idx))
-  }
-
   return (
     <section
       className="gutter-3 section-padding md:gutter-5"
@@ -46,58 +45,28 @@ export function ProductFaqSection({ questions }: ProductFaqSectionProps) {
           delayMs={60}
           className="overflow-hidden rounded-2xl bg-popover px-5"
         >
-          <div
-            data-slot="accordion"
+          <Accordion
+            type="multiple"
+            defaultValue={["0"]}
             className="-my-px flex w-full flex-col border-y"
-            data-orientation="vertical"
           >
-            {questions.map((item, idx) => {
-              const isOpen = openIdx === idx
-              return (
-                <div
-                  key={item.question}
-                  data-slot="accordion-item"
-                  data-state={isOpen ? "open" : "closed"}
-                  className="not-last:border-b"
-                >
-                  <h3 className="font-text flex tracking-normal">
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      data-state={isOpen ? "open" : "closed"}
-                      data-slot="accordion-trigger"
-                      onClick={() => toggle(idx)}
-                      className="group/accordion-trigger relative flex flex-1 items-center justify-between gap-6 rounded-md py-5 text-start text-base font-medium transition-colors outline-none hover:text-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                      <span>{item.question}</span>
-                      {isOpen ? (
-                        <Minus
-                          data-slot="accordion-trigger-icon"
-                          className="pointer-events-none size-4 shrink-0 text-foreground"
-                        />
-                      ) : (
-                        <Plus
-                          data-slot="accordion-trigger-icon"
-                          className="pointer-events-none size-4 shrink-0 text-foreground"
-                        />
-                      )}
-                    </button>
-                  </h3>
-                  {isOpen ? (
-                    <div
-                      data-slot="accordion-content"
-                      data-state="open"
-                      className="overflow-hidden text-sm text-muted-foreground"
-                    >
-                      <div className="pt-0 pb-5 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">
-                        {item.answer}
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              )
-            })}
-          </div>
+            {questions.map((item, idx) => (
+              <AccordionItem key={item.question} value={String(idx)}>
+                <AccordionTrigger showChevron={false}>
+                  <span>{item.question}</span>
+                  <Plus
+                    data-slot="accordion-trigger-icon"
+                    className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
+                  />
+                  <Minus
+                    data-slot="accordion-trigger-icon"
+                    className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
+                  />
+                </AccordionTrigger>
+                <AccordionContent>{item.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </ScrollReveal>
       </div>
     </section>
