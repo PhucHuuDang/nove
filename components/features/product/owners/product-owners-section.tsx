@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { ScrollReveal } from "@/components/shared/scroll-reveal"
 import type { MachinePageData } from "@/lib/data/product-pages-data"
+import type { CarouselApi } from "@/components/ui/carousel"
 import { ProductOwnersFeaturedImages } from "./product-owners-featured-images"
 import { ProductOwnersCarousel } from "./product-owners-carousel"
 
@@ -12,15 +13,22 @@ interface ProductOwnersSectionProps {
 }
 
 export function ProductOwnersSection({ owners }: ProductOwnersSectionProps) {
-  const [selectedIdx, setSelectedIdx] = useState(0)
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
 
-  const handlePrev = () => {
-    setSelectedIdx((prev) => (prev > 0 ? prev - 1 : owners.reviews.length - 1))
-  }
-
-  const handleNext = () => {
-    setSelectedIdx((prev) => (prev < owners.reviews.length - 1 ? prev + 1 : 0))
-  }
+  useEffect(() => {
+    if (!api) return
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap())
+    }
+    onSelect()
+    api.on("select", onSelect)
+    api.on("reInit", onSelect)
+    return () => {
+      api.off("select", onSelect)
+      api.off("reInit", onSelect)
+    }
+  }, [api])
 
   return (
     <section
@@ -66,7 +74,7 @@ export function ProductOwnersSection({ owners }: ProductOwnersSectionProps) {
           </div>
 
           <div className="group/avatar-group mt-6 flex -space-x-2">
-            {owners.reviews.map((rev) => (
+            {owners.reviews.slice(0, 5).map((rev) => (
               <span
                 key={rev.author}
                 className="group/avatar relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken"
@@ -87,15 +95,14 @@ export function ProductOwnersSection({ owners }: ProductOwnersSectionProps) {
         </ScrollReveal>
 
         {/* Column 2: Featured Image */}
-        <ProductOwnersFeaturedImages selectedIdx={selectedIdx} />
+        <ProductOwnersFeaturedImages selectedIdx={current} />
 
         {/* Column 3: Vertical Review Carousel */}
         <ProductOwnersCarousel
           reviews={owners.reviews}
-          selectedIdx={selectedIdx}
-          onSelect={setSelectedIdx}
-          onPrev={handlePrev}
-          onNext={handleNext}
+          current={current}
+          setApi={setApi}
+          api={api}
         />
       </div>
     </section>
