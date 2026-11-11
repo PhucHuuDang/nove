@@ -13,7 +13,7 @@ const AVATARS = [
 export function HeroSection() {
   return (
     <section className="gutter-3 py-3 md:gutter-5 md:py-5">
-      <div className="relative flex flex-col gap-2 rounded-3xl bg-card p-2 md:min-h-[40rem] md:gap-3 md:p-3 lg:min-h-[44rem] xl:min-h-[clamp(44rem,calc(100svh-2.5rem),72rem)]">
+      <div className="relative flex flex-col gap-2 rounded-3xl bg-card p-2 md:min-h-[clamp(40rem,calc(100svh-2.5rem),72rem)] md:gap-3 md:p-3 lg:min-h-[clamp(44rem,calc(100svh-2.5rem),72rem)] xl:min-h-[clamp(44rem,calc(100svh-2.5rem),72rem)]">
         {/* Navigation placement slot for header positioning */}
         <div className="absolute inset-x-0 top-0 z-10 px-7 pt-7 md:px-11 md:pt-11 lg:px-13 lg:pt-13">
           <div
@@ -30,8 +30,9 @@ export function HeroSection() {
           {/* Left Column Card */}
           <div className="flex min-w-0 flex-col rounded-2xl bg-popover px-5 pt-28 pb-6 md:px-8 md:pt-36 md:pb-8 lg:px-10 lg:pb-10">
             <div className="mt-auto">
-              <h1 className="text-4xl leading-tight font-normal md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
-                Café espresso at home,
+              <h1 className="text-4xl leading-tight font-medium tracking-tight md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
+                Café espresso
+                <br className="hidden sm:inline" /> at home,
                 <br />
                 <span className="text-muted-foreground">loved by</span>{" "}
                 <span className="inline-flex translate-y-[0.06em] items-center rounded-full bg-popover p-[0.08em] align-baseline shadow-md">
