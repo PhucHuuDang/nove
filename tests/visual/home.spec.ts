@@ -11,10 +11,14 @@ test.describe("Home Page", () => {
     const heading = page.locator("h1")
     await expect(heading).toContainText("Café espresso at home")
 
-    // Check coffee tabs presence
+    // Check drinks section presence
     await expect(page.getByText("What you can make")).toBeVisible()
-    await expect(page.getByRole("button", { name: "Espresso" })).toBeVisible()
-    await expect(page.getByRole("button", { name: "Latte" })).toBeVisible()
+    await expect(
+      page.getByRole("link", { name: /Espresso/i }).first()
+    ).toBeVisible()
+    await expect(
+      page.getByRole("link", { name: /Latte/i }).first()
+    ).toBeVisible()
 
     // Check machine compare section
     await expect(page.getByText("Three machines. Same espresso.")).toBeVisible()
@@ -42,17 +46,37 @@ test.describe("Home Page", () => {
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 2)
   })
 
-  test("coffee tabs switch drinks and images", async ({ page }) => {
+  test("drinks section displays drinks and links to products", async ({
+    page,
+  }) => {
     await page.goto("/")
     await page.waitForLoadState("networkidle")
 
-    const latteTab = page.getByRole("button", { name: "Latte" })
-    await latteTab.scrollIntoViewIfNeeded()
-    await latteTab.click()
+    const drinksSection = page.locator("#drinks")
+    await drinksSection.scrollIntoViewIfNeeded()
 
-    await expect(page.getByText(/1:4 ratio · textured milk/i)).toBeVisible()
+    await expect(drinksSection.getByText("What you can make")).toBeVisible()
     await expect(
-      page.getByText("A double shot poured into 180 ml of rich steamed milk.")
+      drinksSection.getByText("Espresso", { exact: true })
     ).toBeVisible()
+    await expect(
+      drinksSection.getByText("Americano", { exact: true })
+    ).toBeVisible()
+    await expect(
+      drinksSection.getByText("Cortado", { exact: true })
+    ).toBeVisible()
+    await expect(
+      drinksSection.getByText("Flat white", { exact: true })
+    ).toBeVisible()
+    await expect(
+      drinksSection.getByText("Latte", { exact: true })
+    ).toBeVisible()
+
+    // Verify product links
+    const espressoLink = drinksSection.getByRole("link", { name: /Espresso/i })
+    await expect(espressoLink).toHaveAttribute("href", "/shop/one")
+
+    const latteLink = drinksSection.getByRole("link", { name: /Latte/i })
+    await expect(latteLink).toHaveAttribute("href", "/shop/duo")
   })
 })

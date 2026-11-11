@@ -143,6 +143,10 @@
   padding-inline: 1.25rem;
 }
 
+@utility section-padding {
+  padding-block: 5rem;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
