@@ -2,6 +2,7 @@ import { HomeHeroSection } from "@/components/features/home/hero-section"
 import { CoffeeTabsSection } from "@/components/features/home/coffee-tabs-section"
 import { HomeDetailsSection } from "@/components/features/home/details-section"
 import { HomeModelsSection } from "@/components/features/home/models-section"
+import { HomeAddonsSection } from "@/components/features/home/addons-section"
 import { HomeReviewsSection } from "@/components/features/home/reviews-section"
 import { AboutBlurbSection } from "@/components/features/home/about-blurb-section"
 import { HomeCountersSection } from "@/components/features/home/counters-section"
@@ -16,6 +17,7 @@ export default function HomePage() {
       <CoffeeTabsSection />
       <HomeDetailsSection />
       <HomeModelsSection />
+      <HomeAddonsSection />
       <HomeReviewsSection />
       <AboutBlurbSection />
       <HomeCountersSection />

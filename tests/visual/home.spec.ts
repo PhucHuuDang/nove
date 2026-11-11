@@ -23,6 +23,9 @@ test.describe("Home Page", () => {
     // Check three models section
     await expect(page.getByText("Pick by what you drink")).toBeVisible()
 
+    // Check add-ons section
+    await expect(page.getByText("What else you will need")).toBeVisible()
+
     // Check engineering details section
     await expect(page.getByText("Why the espresso tastes better")).toBeVisible()
     await expect(
