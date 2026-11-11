@@ -15,6 +15,7 @@ test.describe("Content Pages", () => {
 
   test("contact page renders channels and form", async ({ page }) => {
     await page.goto("/contact")
+    await page.waitForLoadState("networkidle")
     await expect(page).toHaveTitle(/Contact · Nove/)
     await expect(page.locator("h1")).toContainText("Talk to the makers")
     await expect(page.getByText("Chat with us")).toBeVisible()

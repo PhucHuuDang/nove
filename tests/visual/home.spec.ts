@@ -44,11 +44,13 @@ test.describe("Home Page", () => {
 
   test("coffee tabs switch drinks and images", async ({ page }) => {
     await page.goto("/")
+    await page.waitForLoadState("networkidle")
 
     const latteTab = page.getByRole("button", { name: "Latte" })
+    await latteTab.scrollIntoViewIfNeeded()
     await latteTab.click()
 
-    await expect(page.getByText("1:4 ratio · textured milk")).toBeVisible()
+    await expect(page.getByText(/1:4 ratio · textured milk/i)).toBeVisible()
     await expect(
       page.getByText("A double shot poured into 180 ml of rich steamed milk.")
     ).toBeVisible()

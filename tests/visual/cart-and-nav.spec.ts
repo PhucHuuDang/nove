@@ -5,16 +5,17 @@ test.describe("Navigation and Cart Drawer", () => {
     page,
   }) => {
     await page.goto("/shop/duo")
+    await page.waitForLoadState("networkidle")
 
     // Initially cart count badge is not present
-    await expect(page.locator("button[aria-label^='Cart']")).toBeVisible()
+    await expect(page.locator("button[aria-label*='Bag']")).toBeVisible()
 
     // Add to bag
     const addBtn = page.getByRole("button", { name: "Add to bag" }).first()
     await addBtn.click()
 
     // Badge should show 1
-    const cartBtn = page.locator("button[aria-label^='Cart (1']")
+    const cartBtn = page.locator("button[aria-label*='1 item']")
     await expect(cartBtn).toBeVisible()
 
     // Click cart button to open drawer
@@ -42,19 +43,20 @@ test.describe("Navigation and Cart Drawer", () => {
     await page.goto("/")
 
     if (isMobile) {
+      await page.waitForLoadState("networkidle")
       const openBtn = page.getByRole("button", { name: "Open menu" })
       await expect(openBtn).toBeVisible()
 
       await openBtn.click()
       await expect(
-        page.getByRole("banner").getByRole("link", { name: "Journal" })
+        page.getByRole("navigation").getByRole("link", { name: "Journal" })
       ).toBeVisible()
 
       const closeBtn = page.getByRole("button", { name: "Close menu" })
       await closeBtn.click()
     } else {
       await expect(
-        page.getByRole("link", { name: "About" }).first()
+        page.getByRole("link", { name: "Our story" }).first()
       ).toBeVisible()
       await expect(
         page.getByRole("button", { name: "Open menu" })

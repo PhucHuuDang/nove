@@ -1,84 +1,127 @@
-import Image from "next/image"
 import Link from "next/link"
+import Image from "next/image"
+import { Star } from "lucide-react"
 
-import { StarRating } from "@/components/shared/star-rating"
-import { buttonVariants } from "@/components/ui/button"
-import { reviewStats } from "@/lib/data/reviews"
+import { HeroFloatingCard } from "@/components/features/home/hero-floating-card"
 
-const BASE = "https://nove-nextjs-template.vercel.app"
+const AVATARS = [
+  { src: "/images/home/reviews/faces/giulia.jpg", alt: "Giulia" },
+  { src: "/images/home/reviews/faces/tom.jpg", alt: "Tom" },
+  { src: "/images/home/reviews/faces/sarah.jpg", alt: "Sarah" },
+]
 
-export function HomeHeroSection() {
+export function HeroSection() {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-background pt-8 pb-16 md:pt-16 md:pb-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        {/* Top badge */}
-        <div className="flex flex-col items-center justify-center text-center">
-          <StarRating
-            rating={reviewStats.rating}
-            reviewsCount={reviewStats.count}
-            avatars={reviewStats.avatars}
-            className="justify-center"
-          />
-
-          <h1 className="mt-6 max-w-4xl text-4xl font-light tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
-            Café espresso at home
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-base leading-relaxed font-light text-muted-foreground sm:text-lg md:text-xl">
-            9 bar pressure, a 58 mm commercial portafilter, and heated to
-            brewing temperature in 40 seconds. Made in Turin.
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/shop"
-              className={buttonVariants({ variant: "default", size: "lg" })}
-            >
-              See the machines
-            </Link>
-            <Link
-              href="/showroom"
-              className={buttonVariants({ variant: "outline", size: "lg" })}
-            >
-              Visit the showroom
-            </Link>
-          </div>
-        </div>
-
-        {/* Center Machine Image */}
-        <div className="relative mx-auto mt-12 aspect-16/10 max-w-4xl sm:mt-16">
-          <Image
-            src={`${BASE}/images/home/machine.png`}
-            alt="Nove Duo espresso machine"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 1000px"
-            className="object-contain"
+    <section className="gutter-3 py-3 md:gutter-5 md:py-5">
+      <div className="relative flex flex-col gap-2 rounded-3xl bg-card p-2 md:min-h-[40rem] md:gap-3 md:p-3 lg:min-h-[44rem] xl:min-h-[clamp(44rem,calc(100svh-2.5rem),72rem)]">
+        {/* Navigation placement slot for header positioning */}
+        <div className="absolute inset-x-0 top-0 z-10 px-7 pt-7 md:px-11 md:pt-11 lg:px-13 lg:pt-13">
+          <div
+            aria-hidden="true"
+            data-nav-slot="true"
+            data-tone="light"
+            data-bag="always"
+            className="h-11 shrink-0"
           />
         </div>
 
-        {/* Bottom Trust Indicators */}
-        <div className="mt-12 grid grid-cols-1 divide-y border-y border-border text-center sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          <div className="py-4">
-            <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-              Free shipping
-            </p>
-            <p className="mt-1 text-sm font-medium">Europe & US, 3 to 5 days</p>
+        {/* 2-Column Split Hero Layout */}
+        <div className="grid flex-1 gap-2 md:grid-cols-[11fr_9fr] md:gap-3 lg:grid-cols-[3fr_2fr] xl:grid-cols-[11fr_9fr]">
+          {/* Left Column Card */}
+          <div className="flex min-w-0 flex-col rounded-2xl bg-popover px-5 pt-28 pb-6 md:px-8 md:pt-36 md:pb-8 lg:px-10 lg:pb-10">
+            <div className="mt-auto">
+              <h1 className="text-4xl leading-tight font-normal md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
+                Café espresso at home,
+                <br />
+                <span className="text-muted-foreground">loved by</span>{" "}
+                <span className="inline-flex translate-y-[0.06em] items-center rounded-full bg-popover p-[0.08em] align-baseline shadow-md">
+                  {AVATARS.map((avatar) => (
+                    <span
+                      key={avatar.src}
+                      className="relative -ms-[0.18em] size-[0.7em] overflow-hidden rounded-full ring-2 ring-popover first:ms-0"
+                    >
+                      <Image
+                        src={avatar.src}
+                        alt={avatar.alt}
+                        fill
+                        sizes="3rem"
+                        className="object-cover"
+                      />
+                    </span>
+                  ))}
+                </span>{" "}
+                1,284 owners.
+              </h1>
+
+              <p className="mt-5 max-w-md text-base text-pretty text-muted-foreground md:text-lg">
+                One steel and walnut machine in three models, from a barista and
+                an engineer in Turin. From $650.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="/shop"
+                  className="group/button inline-flex h-13 shrink-0 items-center justify-center gap-2 rounded-full border border-transparent bg-accent bg-clip-padding px-8 text-base font-medium whitespace-nowrap text-accent-foreground transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out outline-none select-none hover:bg-accent/85 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.97]"
+                >
+                  Shop the machines
+                </Link>
+                <Link
+                  href="/shop#compare"
+                  className="group/button inline-flex h-13 shrink-0 items-center justify-center gap-2 rounded-full border border-transparent bg-secondary bg-clip-padding px-8 text-base font-medium whitespace-nowrap text-secondary-foreground transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out outline-none select-none hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.97]"
+                >
+                  Compare the models
+                </Link>
+              </div>
+
+              <p className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm md:mt-12">
+                <span
+                  className="flex items-center gap-0.5"
+                  aria-label="4.9 out of 5"
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="size-3.5 fill-current"
+                      aria-hidden="true"
+                    />
+                  ))}
+                </span>
+                <span className="figures">4.9 from 1,284 reviews</span>
+                <span
+                  aria-hidden="true"
+                  className="text-muted-foreground max-sm:hidden"
+                >
+                  ·
+                </span>
+                <span className="text-muted-foreground">
+                  Swap the model within 30 days
+                </span>
+              </p>
+            </div>
           </div>
-          <div className="py-4">
-            <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-              30-day swap
-            </p>
-            <p className="mt-1 text-sm font-medium">Change to another model</p>
-          </div>
-          <div className="py-4">
-            <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-              3-year warranty
-            </p>
-            <p className="mt-1 text-sm font-medium">Parts & labour covered</p>
+
+          {/* Right Column Card: Video + Floating Model Card */}
+          <div className="relative isolate min-h-[26rem] overflow-hidden rounded-2xl md:min-h-0">
+            <video
+              aria-hidden="true"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/videos/hero-poster.jpg"
+              className="pointer-events-none absolute inset-0 -z-10 size-full object-cover"
+            >
+              <source src="/videos/hero.webm" type="video/webm" />
+              <source src="/videos/hero.mp4" type="video/mp4" />
+            </video>
+
+            <HeroFloatingCard />
           </div>
         </div>
       </div>
     </section>
   )
 }
+
+export const HomeHeroSection = HeroSection

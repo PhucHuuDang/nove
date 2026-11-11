@@ -1,17 +1,23 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Jost, IBM_Plex_Mono } from "next/font/google"
 
 import "./globals.css"
 import { Providers } from "@/components/providers"
+import { TopBanner } from "@/components/shared/top-banner"
 import { Navbar } from "@/components/shared/navbar"
 import { Footer } from "@/components/shared/footer"
 import { cn } from "@/lib/utils"
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
+const fontSans = Jost({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
+})
 
-const fontMono = Geist_Mono({
+const fontMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "500", "600"],
 })
 
 export const metadata: Metadata = {
@@ -35,14 +41,15 @@ export default function RootLayout({
       className={cn(
         "antialiased",
         fontMono.variable,
-        "font-sans",
-        geist.variable
+        fontSans.variable,
+        "font-sans"
       )}
     >
       <body className="flex min-h-screen flex-col bg-background text-foreground">
         <Providers>
+          <TopBanner />
           <Navbar />
-          <main className="flex-1 pt-14">{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </Providers>
       </body>
