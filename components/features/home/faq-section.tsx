@@ -1,90 +1,72 @@
-import { FAQAccordion, type FAQItem } from "@/components/shared/faq-accordion"
-import { SectionLabel } from "@/components/shared/section-label"
-
-const BASE = "https://nove-nextjs-template.vercel.app"
-
-const HOME_FAQS: FAQItem[] = [
-  {
-    id: "which-model",
-    badge: "One / Duo / Pro",
-    image: `${BASE}/images/home/machine.png`,
-    question: "Which model should I get?",
-    answer:
-      "If you drink your coffee black, get the One. If you drink flat whites or lattes, get the Duo. If two or more people want milk drinks back-to-back, get the Pro. Pick wrong and swap within 30 days.",
-  },
-  {
-    id: "in-the-box",
-    badge: "58 mm",
-    image: `${BASE}/images/home/details-portafilter-3d.png`,
-    question: "What is in the box?",
-    answer:
-      "The machine, a commercial 58 mm portafilter with single and double baskets, a stainless steel tamper, and the power lead. The Duo and Pro also include a 350 ml milk jug.",
-  },
-  {
-    id: "grinder",
-    badge: "$290",
-    image: `${BASE}/images/home/grinder.png`,
-    question: "Do I need the grinder?",
-    answer:
-      "Not if you order pre-ground beans. But ground coffee begins losing aroma in 15 minutes, so grinding fresh right before each shot gives dramatically better espresso. Our grinder matches the machine in steel and walnut.",
-  },
-  {
-    id: "swap",
-    badge: "30 days",
-    image: `${BASE}/images/home/machine-one.png`,
-    question: "How does the 30-day swap work?",
-    answer:
-      "If you decide you need a steam wand or want a smaller footprint, let us know within 30 days. We ship your new model right away, you send the original back in its box, and we refund or charge the price difference.",
-  },
-  {
-    id: "warmup",
-    badge: "40 s",
-    image: `${BASE}/images/home/faq-warmup.jpg`,
-    question: "How long does it take to warm up?",
-    answer:
-      "40 seconds on the One, 45 seconds on the Duo, and 90 seconds on the Pro (which heats two independent boilers to pull espresso and steam milk simultaneously).",
-  },
-  {
-    id: "warranty",
-    badge: "3 years",
-    image: `${BASE}/images/home/faq-warranty.jpg`,
-    question: "What does the warranty cover?",
-    answer:
-      "Three years covering parts and labour, including the pump, heating element, and valves. If anything ever fails, we repair or replace it with free two-way shipping.",
-  },
-  {
-    id: "shipping",
-    badge: "3 to 5 days",
-    image: `${BASE}/images/home/faq-shipping.jpg`,
-    question: "Where do you ship, and how fast?",
-    answer:
-      "Shipping is completely free across Europe and the continental United States. Orders ship from Turin via express courier and arrive in 3 to 5 business days.",
-  },
-  {
-    id: "noise",
-    badge: "28 s",
-    image: `${BASE}/images/home/faq-loud.jpg`,
-    question: "Is it loud?",
-    answer:
-      "It makes a gentle low hum rather than a violent rattle. About as quiet as an electric kettle, only running for the 28 seconds it takes to pull the shot.",
-  },
-]
+import Link from "next/link"
+import { ScrollReveal } from "@/components/shared/scroll-reveal"
+import { FaqModelsCard, FaqSwapCard } from "./faq/faq-bento-cards"
+import {
+  FaqBoxCard,
+  FaqGrinderCard,
+  FaqWarmupCard,
+  FaqWarrantyCard,
+  FaqShippingCard,
+  FaqLoudCard,
+} from "./faq/faq-media-cards"
 
 export function HomeFaqSection() {
   return (
-    <section className="border-b border-border bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <div className="max-w-2xl">
-          <SectionLabel>FAQ</SectionLabel>
-          <h2 className="mt-2 text-3xl font-light tracking-tight text-foreground md:text-5xl">
-            Questions you might have
-          </h2>
-        </div>
-
-        <div className="mt-10">
-          <FAQAccordion items={HOME_FAQS} />
+    <section
+      className="relative gutter-3 section-padding md:gutter-5"
+      aria-labelledby="faq-heading"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-[44rem] overflow-clip mask-t-from-45% [--arc-x:50%] [--arc-y:calc(100%_-_1440px)] lg:block"
+      >
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-radial-[circle_1440px_at_var(--arc-x)_var(--arc-y)] from-card from-92% via-chart-2/70 via-97% to-transparent" />
+          <div
+            className="absolute inset-y-0 -left-full w-[200%] [mask-image:repeating-linear-gradient(to_right,transparent,black_12.5%,transparent_25%)] will-change-transform"
+            style={{ transform: "translateX(25%)" }}
+          >
+            <div
+              className="absolute inset-y-0 left-1/2 w-1/2 bg-radial-[circle_1440px_at_var(--arc-x)_var(--arc-y)] from-transparent from-92% via-chart-2/50 via-96% to-transparent to-99% will-change-transform"
+              style={{ transform: "translateX(-50%)" }}
+            />
+          </div>
         </div>
       </div>
+
+      <ScrollReveal
+        as="header"
+        className="relative flex flex-col items-center text-center"
+      >
+        <p className="text-sm font-medium text-muted-foreground">FAQ</p>
+        <h2
+          className="mt-3 text-4xl leading-[1.05] md:text-5xl lg:text-6xl"
+          id="faq-heading"
+        >
+          Common questions
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
+          If yours is not here,{" "}
+          <Link
+            className="rounded-sm text-foreground underline decoration-foreground/30 underline-offset-4 transition-[text-decoration-color] duration-200 ease-soft outline-none hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+            href="/contact"
+          >
+            write to us
+          </Link>
+          .
+        </p>
+      </ScrollReveal>
+
+      <ul className="relative mx-auto mt-10 grid max-w-7xl gap-4 md:mt-14 md:grid-cols-2 lg:grid-cols-12 lg:gap-5">
+        <FaqModelsCard />
+        <FaqBoxCard />
+        <FaqGrinderCard />
+        <FaqSwapCard />
+        <FaqWarmupCard />
+        <FaqWarrantyCard />
+        <FaqShippingCard />
+        <FaqLoudCard />
+      </ul>
     </section>
   )
 }

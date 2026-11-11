@@ -37,8 +37,8 @@ test.describe("Home Page", () => {
       page.getByRole("heading", { name: "Nove Duo" }).first()
     ).toBeVisible()
 
-    // Check FAQ accordion
-    await expect(page.getByText("Questions you might have")).toBeVisible()
+    // Check FAQ section
+    await expect(page.getByText("Common questions")).toBeVisible()
 
     // Check no horizontal scrollbar / overflow
     const scrollWidth = await page.evaluate(

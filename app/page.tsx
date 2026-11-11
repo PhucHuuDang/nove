@@ -4,9 +4,8 @@ import { HomeDetailsSection } from "@/components/features/home/details-section"
 import { HomeModelsSection } from "@/components/features/home/models-section"
 import { HomeAddonsSection } from "@/components/features/home/addons-section"
 import { HomeReviewsSection } from "@/components/features/home/reviews-section"
-import { AboutBlurbSection } from "@/components/features/home/about-blurb-section"
-import { HomeCountersSection } from "@/components/features/home/counters-section"
-import { HomePricingCardsSection } from "@/components/features/home/pricing-cards-section"
+import { HomeStorySection } from "@/components/features/home/story-section"
+import { HomeGuaranteeSection } from "@/components/features/home/guarantee-section"
 import { HomeFaqSection } from "@/components/features/home/faq-section"
 import { HomeContactCtaSection } from "@/components/features/home/contact-cta-section"
 
@@ -19,9 +18,8 @@ export default function HomePage() {
       <HomeModelsSection />
       <HomeAddonsSection />
       <HomeReviewsSection />
-      <AboutBlurbSection />
-      <HomeCountersSection />
-      <HomePricingCardsSection />
+      <HomeStorySection />
+      <HomeGuaranteeSection />
       <HomeFaqSection />
       <HomeContactCtaSection />
     </>
