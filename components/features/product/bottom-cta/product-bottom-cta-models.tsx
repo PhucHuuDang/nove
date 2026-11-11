@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 
 interface ProductBottomCtaModelsProps {
   currentSlug: "one" | "duo" | "pro"
+  onSelect: (slug: "one" | "duo" | "pro") => void
 }
 
 const ALL_MODELS = [
@@ -42,6 +43,7 @@ const ALL_MODELS = [
 
 export function ProductBottomCtaModels({
   currentSlug,
+  onSelect,
 }: ProductBottomCtaModelsProps) {
   return (
     <ScrollReveal delayMs={80} className="flex">
@@ -57,8 +59,9 @@ export function ProductBottomCtaModels({
                 className="flex flex-col items-center gap-2"
                 style={{ width: model.width }}
               >
-                <NextLink
-                  href={`/shop/${model.slug}`}
+                <button
+                  type="button"
+                  onClick={() => onSelect(model.slug as "one" | "duo" | "pro")}
                   aria-pressed={isCurrent}
                   aria-label={`Show the Nove ${model.name}`}
                   className={cn(
@@ -103,7 +106,7 @@ export function ProductBottomCtaModels({
                       />
                     ) : null}
                   </span>
-                </NextLink>
+                </button>
               </li>
             )
           })}

@@ -162,6 +162,14 @@
   margin-inline: calc(var(--bleed, 0px) + 0.75rem);
 }
 
+@utility gutter-margin-4 {
+  margin-inline: calc(var(--bleed, 0px) + 1rem);
+}
+
+@utility gutter-margin-5 {
+  margin-inline: calc(var(--bleed, 0px) + 1.25rem);
+}
+
 @utility section-padding {
   padding-block: 3rem;
   @media (min-width: 48rem) {

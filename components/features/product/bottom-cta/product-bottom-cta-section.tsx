@@ -1,6 +1,12 @@
+"use client"
+
+import { useState } from "react"
 import { Truck, RefreshCw, ShieldCheck } from "lucide-react"
 import { ScrollReveal } from "@/components/shared/scroll-reveal"
-import type { MachinePageData } from "@/lib/data/product-pages-data"
+import {
+  MACHINE_PAGES_DATA,
+  type MachinePageData,
+} from "@/lib/data/product-pages-data"
 import { ProductBottomCtaModels } from "./product-bottom-cta-models"
 import { ProductBottomCtaCard } from "./product-bottom-cta-card"
 
@@ -11,10 +17,13 @@ interface ProductBottomCtaSectionProps {
 export function ProductBottomCtaSection({
   data,
 }: ProductBottomCtaSectionProps) {
+  const [activeSlug, setActiveSlug] = useState<"one" | "duo" | "pro">(data.slug)
+  const activeMachine = MACHINE_PAGES_DATA[activeSlug] || data
+
   return (
     <section
       className="gutter-3 section-padding md:gutter-5"
-      aria-label={`Buy the ${data.name}`}
+      aria-label={`Buy the ${activeMachine.name}`}
     >
       <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-3 lg:gap-5">
         {/* Column 1: Value Props List */}
@@ -68,10 +77,13 @@ export function ProductBottomCtaSection({
         </ul>
 
         {/* Column 2: All three models picker */}
-        <ProductBottomCtaModels currentSlug={data.slug} />
+        <ProductBottomCtaModels
+          currentSlug={activeSlug}
+          onSelect={setActiveSlug}
+        />
 
         {/* Column 3: Buy Card */}
-        <ProductBottomCtaCard data={data} />
+        <ProductBottomCtaCard data={activeMachine} />
       </div>
     </section>
   )
