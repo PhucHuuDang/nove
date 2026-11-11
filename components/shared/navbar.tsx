@@ -14,8 +14,8 @@ import { cn } from "@/lib/utils"
 
 const SPRING_TRANSITION = {
   type: "spring" as const,
-  duration: 0.6,
-  bounce: 0.12,
+  duration: 0.8,
+  bounce: 0.1,
 }
 
 const MENU_ITEMS = [
@@ -108,7 +108,7 @@ export function Navbar() {
       transition={SPRING_TRANSITION}
       style={headerStyle}
       className={cn(
-        "fixed z-40 flex items-center text-foreground transition-[background-color,color,box-shadow,border-color] duration-500 ease-soft",
+        "fixed z-40 flex items-center text-foreground transition-[background-color,color,box-shadow,border-color] duration-700 ease-soft",
         !measured && "invisible",
         (isDocked ? true : rest?.dark) && "dark",
         isDocked
@@ -190,7 +190,7 @@ export function Navbar() {
                     initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                     exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
-                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     className="flex"
                   >
                     {compactOpen ? (

@@ -72,8 +72,11 @@ export function NavbarCompactMenu({
           <motion.div
             aria-hidden="true"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.15, duration: 0.3 } }}
-            exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            animate={{
+              opacity: 1,
+              transition: { delay: 0.18, duration: 0.35 },
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.12 } }}
             className="absolute inset-0 rounded-3xl bg-background shadow-2xl"
           />
 
@@ -84,11 +87,11 @@ export function NavbarCompactMenu({
             initial={{ clipPath: CLOSED_CLIP }}
             animate={{
               clipPath: OPEN_CLIP,
-              transition: { duration: 0.5, ease: EASE_SOFT },
+              transition: { duration: 0.65, ease: EASE_SOFT },
             }}
             exit={{
               clipPath: CLOSED_CLIP,
-              transition: { duration: 0.3, ease: EASE_SOFT, delay: 0.05 },
+              transition: { duration: 0.38, ease: EASE_SOFT, delay: 0.05 },
             }}
             className="relative rounded-3xl bg-background ps-5 pe-5 pt-16 pb-3"
           >
@@ -102,15 +105,15 @@ export function NavbarCompactMenu({
                     y: 0,
                     filter: "blur(0px)",
                     transition: {
-                      delay: 0.1 + 0.045 * idx,
-                      duration: 0.45,
+                      delay: 0.12 + 0.05 * idx,
+                      duration: 0.55,
                       ease: EASE_SOFT,
                     },
                   }}
                   exit={{
                     opacity: 0,
                     y: -6,
-                    transition: { duration: 0.12, ease: EASE_SOFT },
+                    transition: { duration: 0.15, ease: EASE_SOFT },
                   }}
                   className="border-t first:border-t-0"
                 >
