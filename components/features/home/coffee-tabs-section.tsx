@@ -66,7 +66,7 @@ export function CoffeeTabsSection() {
     <section
       id="drinks"
       aria-labelledby="drinks-heading"
-      className="overflow-x-clip gutter-3 pt-12 pb-16 md:gutter-5 md:pt-14 md:pb-24"
+      className="overflow-x-clip gutter-3 pt-16 pb-16 md:gutter-5 md:pt-20 md:pb-24"
     >
       <div className="mx-auto max-w-screen-xl">
         <header className="flex max-w-md flex-col items-start">

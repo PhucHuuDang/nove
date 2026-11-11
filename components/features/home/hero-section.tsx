@@ -30,8 +30,9 @@ export function HeroSection() {
           {/* Left Column Card */}
           <div className="flex min-w-0 flex-col rounded-2xl bg-popover px-5 pt-28 pb-6 md:px-8 md:pt-36 md:pb-8 lg:px-10 lg:pb-10">
             <div className="mt-auto">
-              <h1 className="text-4xl leading-tight font-medium tracking-tight md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
-                Café espresso at home,
+              <h1 className="text-4xl leading-tight md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
+                <span className="inline-block">Café espresso</span>{" "}
+                <span className="inline-block">at home,</span>
                 <br />
                 <span className="text-muted-foreground">loved by</span>{" "}
                 <span className="inline-flex translate-y-[0.06em] items-center rounded-full bg-popover p-[0.08em] align-baseline shadow-md">
