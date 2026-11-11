@@ -138,12 +138,24 @@
   font-variant-numeric: tabular-nums;
 }
 
+@utility gutter-0 {
+  padding-inline: calc(var(--bleed, 0px) + 0px);
+}
+
 @utility gutter-3 {
   padding-inline: calc(var(--bleed, 0px) + 0.75rem);
 }
 
+@utility gutter-4 {
+  padding-inline: calc(var(--bleed, 0px) + 1rem);
+}
+
 @utility gutter-5 {
   padding-inline: calc(var(--bleed, 0px) + 1.25rem);
+}
+
+@utility gutter-6 {
+  padding-inline: calc(var(--bleed, 0px) + 1.5rem);
 }
 
 @utility gutter-8 {
@@ -152,6 +164,30 @@
 
 @utility gutter-10 {
   padding-inline: calc(var(--bleed, 0px) + 2.5rem);
+}
+
+@utility gutter-12 {
+  padding-inline: calc(var(--bleed, 0px) + 3rem);
+}
+
+@utility gutter-start-5 {
+  padding-inline-start: calc(var(--bleed, 0px) + 1.25rem);
+}
+
+@utility gutter-start-8 {
+  padding-inline-start: calc(var(--bleed, 0px) + 2rem);
+}
+
+@utility gutter-start-10 {
+  padding-inline-start: calc(var(--bleed, 0px) + 2.5rem);
+}
+
+@utility gutter-start-12 {
+  padding-inline-start: calc(var(--bleed, 0px) + 3rem);
+}
+
+@utility gutter-margin-0 {
+  margin-inline: calc(var(--bleed, 0px) + 0px);
 }
 
 @utility gutter-margin-2 {

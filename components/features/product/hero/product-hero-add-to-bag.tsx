@@ -13,6 +13,20 @@ interface ProductHeroAddToBagProps {
   image: string
 }
 
+function formatMonospacePrice(priceStr: string) {
+  if (priceStr.includes(",")) {
+    const [before, after] = priceStr.split(",")
+    return (
+      <>
+        {before}
+        <span className="-mx-[0.2em]">,</span>
+        {after}
+      </>
+    )
+  }
+  return priceStr
+}
+
 export function ProductHeroAddToBag({
   slug,
   name,
@@ -38,7 +52,9 @@ export function ProductHeroAddToBag({
     <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
       <p className="font-mono text-3xl figures 2xl:text-4xl">
         <span className="relative inline-flex overflow-hidden">
-          <span className="inline-block">{priceFormatted}</span>
+          <span className="inline-block">
+            {formatMonospacePrice(priceFormatted)}
+          </span>
         </span>
       </p>
       <button

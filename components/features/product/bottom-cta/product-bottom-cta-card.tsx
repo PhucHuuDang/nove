@@ -11,6 +11,20 @@ interface ProductBottomCtaCardProps {
   data: MachinePageData
 }
 
+function formatMonospacePrice(priceStr: string) {
+  if (priceStr.includes(",")) {
+    const [before, after] = priceStr.split(",")
+    return (
+      <>
+        {before}
+        <span className="-mx-[0.2em]">,</span>
+        {after}
+      </>
+    )
+  }
+  return priceStr
+}
+
 export function ProductBottomCtaCard({ data }: ProductBottomCtaCardProps) {
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
@@ -43,7 +57,9 @@ export function ProductBottomCtaCard({ data }: ProductBottomCtaCardProps) {
           <p className="text-muted-foreground">{data.tagline}</p>
           <p className="mt-5 font-mono text-4xl figures">
             <span className="relative inline-flex overflow-hidden">
-              <span className="inline-block">{data.priceFormatted}</span>
+              <span className="inline-block">
+                {formatMonospacePrice(data.priceFormatted)}
+              </span>
             </span>
           </p>
         </div>
