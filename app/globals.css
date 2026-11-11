@@ -139,12 +139,22 @@
   padding-inline: 0.75rem;
 }
 
+@utility gutter-3 {
+  padding-inline: calc(var(--bleed, 0px) + 0.75rem);
+}
+
 @utility gutter-5 {
-  padding-inline: 1.25rem;
+  padding-inline: calc(var(--bleed, 0px) + 1.25rem);
 }
 
 @utility section-padding {
-  padding-block: 5rem;
+  padding-block: 3rem;
+  @media (min-width: 48rem) {
+    padding-block: 4rem;
+  }
+  @media (min-width: 64rem) {
+    padding-block: 5rem;
+  }
 }
 
 .raised-card {
@@ -176,6 +186,19 @@
   }
   html {
     @apply font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+  p {
+    text-wrap: pretty;
   }
 }
 
