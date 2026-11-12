@@ -64,6 +64,7 @@ export function NavbarMobile({ triggerLabel }: NavbarMobileProps) {
         side="right"
         className="w-3/4 sm:max-w-sm"
         showCloseButton={true}
+        closeButtonLabel="Close menu"
       >
         <SheetHeader className="p-6">
           <SheetTitle className="text-2xl font-normal text-foreground">

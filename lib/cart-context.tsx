@@ -1,70 +1,116 @@
 "use client"
 
-import { createContext, use, useCallback, useMemo, useReducer } from "react"
-
+import {
+  createContext,
+  use,
+  useCallback,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react"
 import type { CartContextValue, CartItem } from "@/types/cart"
 
-// ─── State & Reducer ─────────────────────────────────────────────────────────
+const STORAGE_KEY = "nove:bag"
+const CHANGE_EVENT = "nove:bag:change"
 
-type CartAction =
-  | { type: "ADD_ITEM"; payload: Omit<CartItem, "qty"> }
-  | { type: "REMOVE_ITEM"; payload: string }
-  | { type: "UPDATE_QTY"; payload: { slug: string; qty: number } }
-  | { type: "CLEAR_CART" }
+const DEFAULT_ITEMS: CartItem[] = []
 
-function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
-  switch (action.type) {
-    case "ADD_ITEM": {
-      const existing = state.find((i) => i.slug === action.payload.slug)
-      if (existing) {
-        return state.map((i) =>
-          i.slug === action.payload.slug ? { ...i, qty: i.qty + 1 } : i
-        )
+let cachedRaw: string | null = null
+let cachedItems: CartItem[] = DEFAULT_ITEMS
+
+function getSnapshot(): CartItem[] {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY)
+    if (raw === cachedRaw) return cachedItems
+    cachedRaw = raw
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      if (Array.isArray(parsed)) {
+        cachedItems = parsed
+        return cachedItems
       }
-      return [...state, { ...action.payload, qty: 1 }]
     }
-    case "REMOVE_ITEM":
-      return state.filter((i) => i.slug !== action.payload)
-    case "UPDATE_QTY":
-      return state
-        .map((i) =>
-          i.slug === action.payload.slug ? { ...i, qty: action.payload.qty } : i
-        )
-        .filter((i) => i.qty > 0)
-    case "CLEAR_CART":
-      return []
-    default:
-      return state
+    cachedItems = DEFAULT_ITEMS
+    return cachedItems
+  } catch {
+    return cachedItems
   }
 }
 
-// ─── Context ─────────────────────────────────────────────────────────────────
+function getServerSnapshot(): CartItem[] {
+  return DEFAULT_ITEMS
+}
+
+function subscribe(callback: () => void): () => void {
+  window.addEventListener(CHANGE_EVENT, callback)
+  window.addEventListener("storage", callback)
+  return () => {
+    window.removeEventListener(CHANGE_EVENT, callback)
+    window.removeEventListener("storage", callback)
+  }
+}
+
+function setStoredItems(nextItems: CartItem[]): void {
+  try {
+    cachedItems = nextItems
+    cachedRaw = JSON.stringify(nextItems)
+    window.localStorage.setItem(STORAGE_KEY, cachedRaw)
+  } catch {
+    cachedItems = nextItems
+  }
+  window.dispatchEvent(new Event(CHANGE_EVENT))
+}
 
 const CartContext = createContext<CartContextValue | null>(null)
 
-// ─── Provider ────────────────────────────────────────────────────────────────
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, dispatch] = useReducer(cartReducer, [])
+  const items = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openBag = useCallback(() => setIsOpen(true), [])
+  const closeBag = useCallback(() => setIsOpen(false), [])
 
   const addItem = useCallback(
-    (item: Omit<CartItem, "qty">) =>
-      dispatch({ type: "ADD_ITEM", payload: item }),
-    []
+    (item: Omit<CartItem, "qty">) => {
+      const existing = items.find((i) => i.slug === item.slug)
+      let next: CartItem[]
+      if (existing) {
+        next = items.map((i) =>
+          i.slug === item.slug ? { ...i, qty: Math.min(i.qty + 1, 9) } : i
+        )
+      } else {
+        next = [...items, { ...item, qty: 1 }]
+      }
+      setStoredItems(next)
+    },
+    [items]
   )
 
   const removeItem = useCallback(
-    (slug: string) => dispatch({ type: "REMOVE_ITEM", payload: slug }),
-    []
+    (slug: string) => {
+      setStoredItems(items.filter((i) => i.slug !== slug))
+    },
+    [items]
   )
 
   const updateQty = useCallback(
-    (slug: string, qty: number) =>
-      dispatch({ type: "UPDATE_QTY", payload: { slug, qty } }),
-    []
+    (slug: string, qty: number) => {
+      if (qty <= 0) {
+        setStoredItems(items.filter((i) => i.slug !== slug))
+      } else {
+        setStoredItems(
+          items.map((i) =>
+            i.slug === slug ? { ...i, qty: Math.min(qty, 9) } : i
+          )
+        )
+      }
+    },
+    [items]
   )
 
-  const clearCart = useCallback(() => dispatch({ type: "CLEAR_CART" }), [])
+  const clearCart = useCallback(() => {
+    setStoredItems([])
+  }, [])
 
   const total = useMemo(
     () => items.reduce((sum, i) => sum + i.price * i.qty, 0),
@@ -74,14 +120,35 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const count = useMemo(() => items.reduce((sum, i) => sum + i.qty, 0), [items])
 
   const value = useMemo<CartContextValue>(
-    () => ({ items, total, count, addItem, removeItem, updateQty, clearCart }),
-    [items, total, count, addItem, removeItem, updateQty, clearCart]
+    () => ({
+      items,
+      total,
+      count,
+      isOpen,
+      setIsOpen,
+      openBag,
+      closeBag,
+      addItem,
+      removeItem,
+      updateQty,
+      clearCart,
+    }),
+    [
+      items,
+      total,
+      count,
+      isOpen,
+      openBag,
+      closeBag,
+      addItem,
+      removeItem,
+      updateQty,
+      clearCart,
+    ]
   )
 
   return <CartContext value={value}>{children}</CartContext>
 }
-
-// ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useCart(): CartContextValue {
   const ctx = use(CartContext)

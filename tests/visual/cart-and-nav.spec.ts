@@ -22,13 +22,15 @@ test.describe("Navigation and Cart Drawer", () => {
     await cartBtn.click()
 
     // Drawer should open showing Nove Duo
-    await expect(page.getByText("Bag (1)")).toBeVisible()
+    await expect(page.getByRole("heading", { name: /Your bag/ })).toBeVisible()
     await expect(page.getByText("Nove Duo").first()).toBeVisible()
     await expect(page.getByText("$950").first()).toBeVisible()
 
     // Increment quantity
     await page.getByRole("button", { name: "Increase quantity" }).click()
-    await expect(page.getByText("Bag (2)")).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: /Your bag \(2\)/ })
+    ).toBeVisible()
     await expect(page.getByText("$1,900").first()).toBeVisible()
 
     // Remove item
