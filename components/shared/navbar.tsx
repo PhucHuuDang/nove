@@ -47,7 +47,6 @@ export function Navbar() {
   const { count } = useCart()
   const [docked, setDocked] = useState(false)
   const [rest, setRest] = useState<NavSlotState | null>(null)
-  const [measured, setMeasured] = useState(false)
   const [compactOpen, setCompactOpen] = useState(false)
   const triggerRef = useRef<HTMLDivElement | null>(null)
 
@@ -72,7 +71,6 @@ export function Navbar() {
     const slot = document.querySelector("[data-nav-slot]")
     const observer = new ResizeObserver(() => {
       const currentSlot = document.querySelector("[data-nav-slot]")
-      setMeasured(true)
       if (!currentSlot) {
         setRest(null)
         return
@@ -91,7 +89,7 @@ export function Navbar() {
     return () => observer.disconnect()
   }, [pathname])
 
-  const isDocked = docked || (measured && !rest)
+  const isDocked = docked || !rest
   const headerStyle =
     isDocked || !rest
       ? { borderRadius: 28 }
@@ -109,7 +107,6 @@ export function Navbar() {
       style={headerStyle}
       className={cn(
         "fixed z-40 flex items-center text-foreground transition-[background-color,color,box-shadow,border-color] duration-700 ease-soft",
-        !measured && "invisible",
         (isDocked ? true : rest?.dark) && "dark",
         isDocked
           ? "dark inset-x-3 top-3 mx-auto max-w-md gap-2 bg-background py-1.5 ps-5 pe-1.5 shadow-2xl md:top-4"

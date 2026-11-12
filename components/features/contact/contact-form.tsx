@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Check } from "lucide-react"
 
 import { SectionLabel } from "@/components/shared/section-label"
-import { Button } from "@/components/ui/button"
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -109,9 +108,12 @@ export function ContactForm() {
                 />
               </div>
 
-              <Button type="submit" size="lg" className="w-full">
+              <button
+                type="submit"
+                className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-foreground text-base font-medium text-background transition-opacity hover:opacity-90"
+              >
                 Send message to Matteo & Davide
-              </Button>
+              </button>
             </form>
           )}
         </div>

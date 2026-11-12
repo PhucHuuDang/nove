@@ -7,7 +7,7 @@ test.describe("Shop Page", () => {
     await page.goto("/shop")
 
     await expect(page).toHaveTitle(/Shop Machines & Accessories · Nove/)
-    await expect(page.locator("h1")).toContainText("Every machine. Every bean.")
+    await expect(page.locator("h1")).toContainText("Machines")
 
     // Check machines
     await expect(page.getByText("Nove One").first()).toBeVisible()
@@ -15,7 +15,7 @@ test.describe("Shop Page", () => {
     await expect(page.getByText("Nove Pro").first()).toBeVisible()
 
     // Check comparison table
-    await expect(page.getByText("Side-by-side specifications")).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Compare" })).toBeVisible()
 
     // Check accessories
     await expect(page.getByText("Nove grinder").first()).toBeVisible()
@@ -27,6 +27,6 @@ test.describe("Shop Page", () => {
     await expect(page.getByText("Decaf roast").first()).toBeVisible()
 
     // Check bundle
-    await expect(page.getByText("Nove Duo + Grinder")).toBeVisible()
+    await expect(page.getByText("The full setup")).toBeVisible()
   })
 })
