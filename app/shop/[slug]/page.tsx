@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+import { pageMetadata } from "@/lib/seo"
+
 import { allProducts, getProductBySlug } from "@/lib/data/products"
 import { MACHINE_PAGES_DATA } from "@/lib/data/product-pages-data"
 import { ProductNavSpacer } from "@/components/features/product/product-nav-spacer"
@@ -21,19 +23,21 @@ export async function generateMetadata({
   const { slug } = await params
   const machine = MACHINE_PAGES_DATA[slug as keyof typeof MACHINE_PAGES_DATA]
   if (machine) {
-    return {
-      title: `${machine.name} · Nove`,
+    return pageMetadata({
+      title: machine.name,
       description: machine.description,
-    }
+      path: `/shop/${slug}`,
+    })
   }
 
   const product = getProductBySlug(slug)
-  if (!product) return { title: "Product Not Found · Nove" }
+  if (!product) return {}
 
-  return {
-    title: `${product.name} · Nove`,
+  return pageMetadata({
+    title: product.name,
     description: product.description,
-  }
+    path: `/shop/${slug}`,
+  })
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {

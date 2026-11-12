@@ -1,11 +1,14 @@
 import type { Metadata } from "next"
+
+import { pageMetadata } from "@/lib/seo"
 import Link from "next/link"
 
-export const metadata: Metadata = {
-  title: "Privacy policy · Nove",
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy policy",
   description:
-    "This policy says what personal data we collect when you shop with us or write to us, what we use it for, how long we keep it and what you can ask us to do with it. It follows the EU General Data Protection Regulation (GDPR).",
-}
+    "What personal data Nove Espresso S.r.l. collects when you order or write to us, why, how long we keep it and how to have it deleted.",
+  path: "/legal/privacy",
+})
 
 const SECTIONS = [
   {

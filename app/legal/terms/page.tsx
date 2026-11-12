@@ -1,12 +1,15 @@
 import type { Metadata } from "next"
 
+import { pageMetadata } from "@/lib/seo"
+
 import { SectionLabel } from "@/components/shared/section-label"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Terms of sale",
   description:
     "The terms for buying from Nove: orders, prices and payment, delivery, the 30-day swap, cancelling and the 3-year warranty.",
-}
+  path: "/legal/terms",
+})
 
 const SECTIONS = [
   {

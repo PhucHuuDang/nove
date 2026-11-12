@@ -1,14 +1,17 @@
 import type { Metadata } from "next"
 
+import { pageMetadata } from "@/lib/seo"
+
 import { NavSpacer } from "@/components/shared/nav-spacer"
 import { JournalFeed } from "@/components/features/journal/journal-feed"
 import { JournalMarquee } from "@/components/features/journal/journal-marquee"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Journal",
   description:
     "Guides from the people who make Nove: your first espresso, milk drinks, the grinder and beans, cleaning and descaling, and how the machines work.",
-}
+  path: "/journal",
+})
 
 export default function JournalPage() {
   return (

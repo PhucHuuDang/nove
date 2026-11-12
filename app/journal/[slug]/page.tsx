@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+import { pageMetadata } from "@/lib/seo"
+
 import { NavSpacer } from "@/components/shared/nav-spacer"
 import { JOURNAL_ARTICLES } from "@/components/features/journal/journal-data"
 import { ARTICLE_CONTENT } from "@/components/features/journal/article/article-content"
@@ -22,8 +24,15 @@ export async function generateMetadata({
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params
   const article = JOURNAL_ARTICLES.find((a) => a.slug === slug)
-  if (!article) return {}
-  return { title: article.title, description: article.summary }
+  const content = ARTICLE_CONTENT[slug]
+  if (!article || !content) return {}
+  return pageMetadata({
+    title: article.title,
+    description: article.summary,
+    path: `/journal/${slug}`,
+    image: { url: article.photo, alt: content.photoAlt },
+    type: "article",
+  })
 }
 
 /** Articles wrap around: the first one's "previous" is the last. */

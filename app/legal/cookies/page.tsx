@@ -1,11 +1,14 @@
 import type { Metadata } from "next"
+
+import { pageMetadata } from "@/lib/seo"
 import Link from "next/link"
 
-export const metadata: Metadata = {
-  title: "Cookie policy · Nove",
+export const metadata: Metadata = pageMetadata({
+  title: "Cookie policy",
   description:
-    "This site stores your bag in your browser, the payment provider sets a security cookie at checkout, and analytics run only if you agree. We use no advertising cookies.",
-}
+    "What the Nove site stores in your browser: your bag and your cookie choice, and analytics only if you agree.",
+  path: "/legal/cookies",
+})
 
 const SECTIONS = [
   {

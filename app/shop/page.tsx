@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 
+import { pageMetadata } from "@/lib/seo"
+
 import { ShopHeroSection } from "@/components/features/shop/hero-section"
 import { ShopMachinesGrid } from "@/components/features/shop/machines-grid"
 import { ShopAccessoriesGrid } from "@/components/features/shop/accessories-grid"
@@ -7,11 +9,12 @@ import { ShopBeansGrid } from "@/components/features/shop/beans-grid"
 import { ShopCompareTable } from "@/components/features/shop/compare-table"
 import { ShopBundleDeal } from "@/components/features/shop/bundle-deal"
 
-export const metadata: Metadata = {
-  title: "Shop Machines & Accessories",
+export const metadata: Metadata = pageMetadata({
+  title: "Shop",
   description:
-    "Explore the Nove One, Duo, and Pro espresso machines, matching precision grinder, milk jug, and coffee bean subscriptions.",
-}
+    "The Nove One, Duo and Pro espresso machines, the grinder, the milk jug and three beans on subscription. Free shipping to Europe and the US.",
+  path: "/shop",
+})
 
 export default function ShopPage() {
   return (

@@ -7,6 +7,7 @@ import { TopBanner } from "@/components/shared/top-banner"
 import { Navbar } from "@/components/shared/navbar"
 import { Footer } from "@/components/shared/footer"
 import { cn } from "@/lib/utils"
+import { rootMetadata } from "@/lib/seo"
 
 const fontSans = Jost({
   subsets: ["latin"],
@@ -20,14 +21,7 @@ const fontMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 })
 
-export const metadata: Metadata = {
-  title: {
-    default: "Nove · Café espresso at home",
-    template: "%s · Nove",
-  },
-  description:
-    "Espresso machines made in Turin, Italy. 9 bar, 58 mm commercial portafilter, heated to brewing temperature in 40 seconds.",
-}
+export const metadata: Metadata = rootMetadata
 
 export default function RootLayout({
   children,
