@@ -76,7 +76,7 @@ export function ShopCompareTable() {
   return (
     <section
       id="compare"
-      className="border-b border-border bg-background py-16 md:py-24"
+      className="scroll-mt-24 border-b border-border bg-background py-16 md:py-24"
     >
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <SectionLabel>Compare</SectionLabel>

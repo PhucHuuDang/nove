@@ -26,7 +26,7 @@ export function ShopBundleDeal() {
   }
 
   return (
-    <section className="bg-background py-16 md:py-24">
+    <section id="setup" className="scroll-mt-24 bg-background py-16 md:py-24">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 rounded-3xl border border-border/80 bg-card p-8 md:p-14 lg:grid-cols-12 lg:items-center">
           <div className="relative aspect-16/9 w-full overflow-hidden rounded-2xl bg-muted/40 lg:col-span-6">

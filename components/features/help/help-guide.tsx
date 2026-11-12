@@ -1,103 +1,101 @@
 "use client"
 
-import { useState } from "react"
-import Image from "next/image"
-
-import { SectionLabel } from "@/components/shared/section-label"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { cn } from "@/lib/utils"
-
-const BASE = "https://nove-nextjs-template.vercel.app"
-
-const STEPS = [
-  {
-    step: "01",
-    title: "Tracking notification",
-    desc: "We email you the DHL or FedEx tracking code as soon as your machine leaves our Turin workshop.",
-    image: `${BASE}/images/help/step-email.jpg`,
-  },
-  {
-    step: "02",
-    title: "Fast free arrival",
-    desc: "It arrives in 3 to 5 business days, free, anywhere in Europe and the continental US.",
-    image: `${BASE}/images/home/faq-shipping.jpg`,
-  },
-  {
-    step: "03",
-    title: "Inspect your delivery",
-    desc: "Check the outer box. If anything suffered damage in transit, take a photo within 7 days and we send a replacement immediately.",
-    image: `${BASE}/images/help/step-photo.jpg`,
-  },
-  {
-    step: "04",
-    title: "Initial rinse",
-    desc: "Rinse the reservoir and run one full tank of hot water through the portafilter before pulling your first espresso.",
-    image: `${BASE}/images/help/step-tank.jpg`,
-  },
-  {
-    step: "05",
-    title: "Keep your packaging",
-    desc: "Keep the custom fitted cardboard packaging for 30 days in case you decide to swap your model.",
-    image: `${BASE}/images/product/box-duo.png`,
-  },
-]
+import { HELP_TABS, HELP_GUIDES } from "./guide/help-guide-data"
+import { HelpGuideTabs } from "./guide/help-guide-tabs"
+import { HelpGuidePanel } from "./guide/help-guide-panel"
+import type { HelpTopicId } from "./guide/help-guide-types"
 
 export function HelpGuide() {
-  const [activeTab, setActiveTab] = useState("shipping")
+  const [activeTab, setActiveTab] = useState<HelpTopicId>("shipping")
+  const [activeSubId, setActiveSubId] = useState<string>("shipping")
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
+  const selectTab = useCallback((topic: HelpTopicId, smoothScroll = true) => {
+    setActiveTab(topic)
+    const firstSub = HELP_GUIDES.find((g) => g.topic === topic)
+    if (firstSub) {
+      setActiveSubId(firstSub.id)
+    }
+    if (smoothScroll && containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+  }, [])
+
+  // Sync state with URL hash
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace(/^#/, "") as HelpTopicId
+      if (HELP_TABS.some((t) => t.id === hash)) {
+        selectTab(hash, true)
+      }
+    }
+
+    handleHash()
+    window.addEventListener("hashchange", handleHash)
+    return () => window.removeEventListener("hashchange", handleHash)
+  }, [selectTab])
+
+  const subGuides = HELP_GUIDES.filter((g) => g.topic === activeTab)
+  const currentGuide =
+    subGuides.find((g) => g.id === activeSubId) ?? subGuides[0]
 
   return (
-    <section className="border-b border-border bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <SectionLabel>Process</SectionLabel>
-        <h2 className="mt-2 text-2xl font-light tracking-tight text-foreground md:text-4xl">
+    <section
+      aria-labelledby="guides-heading"
+      className="relative px-3 pt-10 pb-16 md:px-5 md:pt-14 md:pb-24 lg:pb-32"
+    >
+      <div className="mb-8">
+        <h2
+          id="guides-heading"
+          className="text-2xl font-light tracking-tight text-foreground md:text-3xl"
+        >
           Delivery & first setup
         </h2>
+      </div>
 
-        {/* Tab buttons */}
-        <div className="mt-8 flex flex-wrap gap-2 border-b border-border pb-4 font-mono text-xs">
-          {["shipping", "swap", "warranty", "care"].map((t) => (
-            <button
-              key={t}
-              onClick={() => setActiveTab(t)}
-              className={cn(
-                "rounded-full px-4 py-1.5 tracking-wider uppercase transition-colors",
-                activeTab === t
-                  ? "bg-foreground text-background"
-                  : "bg-muted text-muted-foreground hover:bg-accent hover:text-foreground"
-              )}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+      {/* Anchor targets positioned at the top of this section with scroll offset */}
+      {HELP_TABS.map((tab) => (
+        <span
+          key={tab.id}
+          id={tab.id}
+          aria-hidden="true"
+          className="absolute top-0 scroll-mt-24"
+        />
+      ))}
 
-        {/* Steps */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {STEPS.map((s) => (
-            <div
-              key={s.step}
-              className="flex flex-col justify-between rounded-2xl border border-border/70 bg-card p-5"
-            >
-              <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-muted/40">
-                <Image
-                  src={s.image}
-                  alt={s.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 200px"
-                  className="object-cover"
-                />
-              </div>
+      <div
+        ref={containerRef}
+        className="scroll-mt-24 rounded-3xl bg-foreground p-2 pt-4 md:p-3 md:pt-6"
+      >
+        <HelpGuideTabs
+          activeTab={activeTab}
+          onSelectTab={(t) => {
+            selectTab(t, false)
+            window.history.pushState(null, "", `#${t}`)
+          }}
+        />
 
-              <div className="mt-5">
-                <span className="font-mono text-xs text-muted-foreground">
-                  Step {s.step}
-                </span>
-                <h3 className="mt-1 text-base font-medium">{s.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed font-light text-muted-foreground">
-                  {s.desc}
-                </p>
-              </div>
-            </div>
-          ))}
+        <div
+          role="tabpanel"
+          id="help-panel"
+          aria-labelledby={`help-tab-${activeTab}`}
+          className={cn(
+            "rounded-3xl bg-background p-5 transition-[border-radius] duration-300 ease-soft md:p-8 lg:p-12",
+            activeTab === HELP_TABS[0].id && "max-md:rounded-tl-none"
+          )}
+        >
+          {currentGuide ? (
+            <HelpGuidePanel
+              guide={currentGuide}
+              subGuides={subGuides}
+              onSelectSubGuide={setActiveSubId}
+            />
+          ) : null}
         </div>
       </div>
     </section>

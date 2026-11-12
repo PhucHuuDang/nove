@@ -4,7 +4,10 @@ import { SectionLabel } from "@/components/shared/section-label"
 
 export function ShopBeansGrid() {
   return (
-    <section className="border-b border-border bg-background py-16 md:py-24">
+    <section
+      id="beans"
+      className="scroll-mt-24 border-b border-border bg-background py-16 md:py-24"
+    >
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="flex flex-col justify-between gap-2 md:flex-row md:items-end">
           <div>
