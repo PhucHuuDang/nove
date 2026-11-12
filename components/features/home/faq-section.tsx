@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ScrollArc } from "@/components/shared/scroll-arc"
 import { ScrollReveal } from "@/components/shared/scroll-reveal"
 import { FaqModelsCard, FaqSwapCard } from "./faq/faq-bento-cards"
 import {
@@ -16,23 +17,7 @@ export function HomeFaqSection() {
       className="relative gutter-3 section-padding md:gutter-5"
       aria-labelledby="faq-heading"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-[44rem] overflow-clip mask-t-from-45% [--arc-x:50%] [--arc-y:calc(100%_-_1440px)] lg:block"
-      >
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-radial-[circle_1440px_at_var(--arc-x)_var(--arc-y)] from-card from-92% via-chart-2/70 via-97% to-transparent" />
-          <div
-            className="absolute inset-y-0 -left-full w-[200%] [mask-image:repeating-linear-gradient(to_right,transparent,black_12.5%,transparent_25%)] will-change-transform"
-            style={{ transform: "translateX(25%)" }}
-          >
-            <div
-              className="absolute inset-y-0 left-1/2 w-1/2 bg-radial-[circle_1440px_at_var(--arc-x)_var(--arc-y)] from-transparent from-92% via-chart-2/50 via-96% to-transparent to-99% will-change-transform"
-              style={{ transform: "translateX(-50%)" }}
-            />
-          </div>
-        </div>
-      </div>
+      <ScrollArc close className="bottom-0 hidden h-[44rem] lg:block" />
 
       <ScrollReveal
         as="header"

@@ -1,6 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { cn } from "@/lib/utils"
+
 import type { JournalArticle } from "./journal-data"
 
 const DATE = new Intl.DateTimeFormat("en-US", {
@@ -10,7 +12,20 @@ const DATE = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 })
 
-export function JournalCard({ article }: { article: JournalArticle }) {
+const SIZES = {
+  default: "(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 90vw",
+  sm: "(min-width: 64rem) 22vw, (min-width: 40rem) 45vw, 90vw",
+}
+
+interface JournalCardProps {
+  article: JournalArticle
+  /** `sm` is the four-up "More from the journal" row. */
+  size?: "default" | "sm"
+}
+
+export function JournalCard({ article, size = "default" }: JournalCardProps) {
+  const Heading = size === "sm" ? "h3" : "h2"
+
   return (
     <Link
       href={`/journal/${article.slug}`}
@@ -23,7 +38,7 @@ export function JournalCard({ article }: { article: JournalArticle }) {
               src={article.photo}
               alt=""
               fill
-              sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 90vw"
+              sizes={SIZES[size]}
               className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]"
             />
           </div>
@@ -35,9 +50,14 @@ export function JournalCard({ article }: { article: JournalArticle }) {
               {DATE.format(new Date(article.date))}
             </time>
           </div>
-          <h2 className="mt-1 text-xl underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-300 ease-soft group-hover:decoration-foreground/40">
+          <Heading
+            className={cn(
+              "mt-1 underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-300 ease-soft group-hover:decoration-foreground/40",
+              size === "sm" ? "text-lg" : "text-xl"
+            )}
+          >
             {article.title}
-          </h2>
+          </Heading>
           <div className="mt-auto line-clamp-2 text-sm text-muted-foreground">
             {article.summary}
           </div>

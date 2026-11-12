@@ -350,3 +350,13 @@
 .animate-marquee-reverse:hover {
   animation-play-state: paused;
 }
+
+/* The 404 page stands alone: no announcement bar and no footer. */
+body:has([data-page="not-found"])
+  :is(footer, aside[aria-label="Announcement"]) {
+  display: none;
+}
+
+@utility raised-card {
+  @apply border bg-popover shadow-xs;
+}
