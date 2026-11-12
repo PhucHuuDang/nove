@@ -61,8 +61,8 @@ test.describe("Content Pages", () => {
     await expect(page.locator("h1")).toContainText(
       "Shipping, swaps, warranty and care"
     )
-    await expect(page.getByText("Delivery & first setup")).toBeVisible()
-    await expect(page.getByText("Answers & specifications")).toBeVisible()
+    await expect(page.getByRole("tab", { name: "Shipping" })).toBeVisible()
+    await expect(page.getByText("Shipping and delivery").first()).toBeVisible()
   })
 
   test("legal terms page renders sections", async ({ page }) => {

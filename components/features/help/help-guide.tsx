@@ -19,8 +19,11 @@ export function HelpGuide() {
       setActiveSubId(firstSub.id)
     }
     if (smoothScroll && containerRef.current) {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
       containerRef.current.scrollIntoView({
-        behavior: "smooth",
+        behavior: prefersReducedMotion ? "auto" : "smooth",
         block: "start",
       })
     }
@@ -47,16 +50,11 @@ export function HelpGuide() {
   return (
     <section
       aria-labelledby="guides-heading"
-      className="relative px-3 pt-10 pb-16 md:px-5 md:pt-14 md:pb-24 lg:pb-32"
+      className="relative gutter-3 section-padding pt-10! md:gutter-5 md:pt-14!"
     >
-      <div className="mb-8">
-        <h2
-          id="guides-heading"
-          className="text-2xl font-light tracking-tight text-foreground md:text-3xl"
-        >
-          Delivery & first setup
-        </h2>
-      </div>
+      <h2 id="guides-heading" className="sr-only">
+        Guides
+      </h2>
 
       {/* Anchor targets positioned at the top of this section with scroll offset */}
       {HELP_TABS.map((tab) => (
@@ -93,6 +91,7 @@ export function HelpGuide() {
             <HelpGuidePanel
               guide={currentGuide}
               subGuides={subGuides}
+              allGuides={HELP_GUIDES}
               onSelectSubGuide={setActiveSubId}
             />
           ) : null}

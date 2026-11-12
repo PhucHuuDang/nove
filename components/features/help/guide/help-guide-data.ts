@@ -1,5 +1,5 @@
 import { Truck, RefreshCw, ShieldCheck, Sparkles } from "lucide-react"
-import type { HelpTabDef, GuideItem } from "./help-guide-types"
+import type { HelpTabDef, GuideItem, GuidePicture } from "./help-guide-types"
 
 export const HELP_TABS: HelpTabDef[] = [
   { id: "shipping", label: "Shipping", icon: Truck },
@@ -7,6 +7,229 @@ export const HELP_TABS: HelpTabDef[] = [
   { id: "warranty", label: "Warranty", icon: ShieldCheck },
   { id: "care", label: "Care", icon: Sparkles },
 ]
+
+export const STEP_IMAGES: Record<string, GuidePicture[]> = {
+  shipping: [
+    {
+      src: "/images/help/step-email.jpg",
+      width: 800,
+      height: 800,
+      alt: "A closed envelope with a walnut seal",
+    },
+    {
+      src: "/images/home/faq-shipping.jpg",
+      width: 1200,
+      height: 900,
+      alt: "A closed cardboard box",
+    },
+    {
+      src: "/images/help/step-photo.jpg",
+      width: 800,
+      height: 800,
+      alt: "A phone showing a photo of a cardboard box",
+    },
+    {
+      src: "/images/help/step-tank.jpg",
+      width: 800,
+      height: 800,
+      alt: "The machine's water tank, half full",
+    },
+    {
+      src: "/images/product/box-duo.png",
+      width: 1000,
+      height: 1255,
+      alt: "The Nove Duo packed in its open box with the portafilter, tamper and milk jug in the tray",
+    },
+  ],
+  swap: [
+    {
+      src: "/images/help/step-email.jpg",
+      width: 800,
+      height: 800,
+      alt: "A closed envelope with a walnut seal",
+    },
+    {
+      src: "/images/product/box-one.png",
+      width: 1000,
+      height: 1255,
+      alt: "The Nove One packed in its open box",
+    },
+    {
+      src: "/images/home/faq-shipping.jpg",
+      width: 1200,
+      height: 900,
+      alt: "A closed cardboard box",
+    },
+    {
+      src: "/images/help/step-receipt.jpg",
+      width: 800,
+      height: 800,
+      alt: "A paper receipt",
+    },
+  ],
+  warranty: [
+    {
+      src: "/images/help/step-email.jpg",
+      width: 800,
+      height: 800,
+      alt: "A closed envelope with a walnut seal",
+    },
+    {
+      src: "/images/help/step-calendar.jpg",
+      width: 800,
+      height: 800,
+      alt: "A small desk calendar on a walnut stand",
+    },
+    {
+      src: "/images/home/faq-warranty.jpg",
+      width: 1200,
+      height: 900,
+      alt: "The machine's boiler and pump",
+    },
+  ],
+  daily: [
+    {
+      src: "/images/home/details-portafilter-3d.png",
+      width: 871,
+      height: 909,
+      alt: "The portafilter with its walnut handle",
+    },
+    {
+      src: "/images/home/jug.png",
+      width: 333,
+      height: 400,
+      alt: "Milk jug",
+    },
+    {
+      src: "/images/home/faq-warmup.jpg",
+      width: 1200,
+      height: 900,
+      alt: "The front of the machine with its pressure gauge",
+    },
+    {
+      src: "/images/home/faq-loud.jpg",
+      width: 1200,
+      height: 900,
+      alt: "Espresso pouring from the portafilter into a white cup",
+    },
+  ],
+  backflush: [
+    {
+      src: "/images/home/details-portafilter-3d.png",
+      width: 871,
+      height: 909,
+      alt: "The portafilter with its walnut handle",
+    },
+    {
+      src: "/images/home/details-stopwatch.png",
+      width: 816,
+      height: 800,
+      alt: "A steel stopwatch",
+    },
+    {
+      src: "/images/help/step-cleaner.jpg",
+      width: 800,
+      height: 800,
+      alt: "A steel tin of cleaning tablets",
+    },
+    {
+      src: "/images/home/faq-loud.jpg",
+      width: 1200,
+      height: 900,
+      alt: "Espresso pouring from the portafilter into a white cup",
+    },
+  ],
+  descale: [
+    {
+      src: "/images/help/step-descaler.jpg",
+      width: 800,
+      height: 800,
+      alt: "A bottle of descaler",
+    },
+    {
+      src: "/images/home/details-gauge-3d.png",
+      width: 737,
+      height: 800,
+      alt: "The machine's pressure gauge",
+    },
+    {
+      src: "/images/home/faq-warmup.jpg",
+      width: 1200,
+      height: 900,
+      alt: "The front of the machine with its pressure gauge",
+    },
+    {
+      src: "/images/home/details-stopwatch.png",
+      width: 816,
+      height: 800,
+      alt: "A steel stopwatch",
+    },
+    {
+      src: "/images/help/step-tank.jpg",
+      width: 800,
+      height: 800,
+      alt: "The machine's water tank, half full",
+    },
+  ],
+  water: [
+    {
+      src: "/images/help/step-filter-jug.jpg",
+      width: 800,
+      height: 800,
+      alt: "A water filter jug",
+    },
+    {
+      src: "/images/help/step-tank.jpg",
+      width: 800,
+      height: 800,
+      alt: "The machine's water tank, half full",
+    },
+    {
+      src: "/images/home/faq-warmup.jpg",
+      width: 1200,
+      height: 900,
+      alt: "The front of the machine with its pressure gauge",
+    },
+    {
+      src: "/images/help/step-tank.jpg",
+      width: 800,
+      height: 800,
+      alt: "The machine's water tank, half full",
+    },
+  ],
+  burrs: [
+    {
+      src: "/images/help/step-notebook.jpg",
+      width: 800,
+      height: 800,
+      alt: "A notebook with a pencil",
+    },
+    {
+      src: "/images/home/grinder.png",
+      width: 800,
+      height: 800,
+      alt: "Nove grinder",
+    },
+    {
+      src: "/images/home/grinder.png",
+      width: 800,
+      height: 800,
+      alt: "Nove grinder",
+    },
+    {
+      src: "/images/help/step-brush.jpg",
+      width: 800,
+      height: 800,
+      alt: "A small brush with a walnut handle",
+    },
+    {
+      src: "/images/home/grinder.png",
+      width: 800,
+      height: 800,
+      alt: "Nove grinder",
+    },
+  ],
+}
 
 export const HELP_GUIDES: GuideItem[] = [
   {
@@ -46,7 +269,7 @@ export const HELP_GUIDES: GuideItem[] = [
         ],
         picture: {
           src: "/images/product/box-duo.png",
-          alt: "The Nove Duo packed in its open box with portafilter",
+          alt: "The Nove Duo packed in its open box with the portafilter, tamper and milk jug in the tray",
           width: 1000,
           height: 1255,
         },
@@ -118,7 +341,7 @@ export const HELP_GUIDES: GuideItem[] = [
     sections: [
       {
         heading: "What it covers",
-        text: "Parts and labour for 3 years from delivery, including the pump and the boiler. We pay for shipping both ways. After that, repairs at the price of the part.",
+        text: "Every Nove machine comes with a three-year warranty covering all parts and labour.",
         bullets: [
           "Parts and labour for 3 years from delivery",
           "The pump and the boiler included",
@@ -142,11 +365,17 @@ export const HELP_GUIDES: GuideItem[] = [
       },
       {
         heading: "Parts for every machine",
-        text: "We keep every part for every machine we have sold.",
+        text: "Every part is modular and replaceable with ordinary tools. We keep parts in stock in Turin for ten years after a model stops shipping.",
+        picture: {
+          src: "/images/home/details-exploded.png",
+          alt: "The machine's modular parts diagram",
+          width: 1200,
+          height: 900,
+        },
       },
     ],
     steps: [
-      "Write to hello@nove.coffee with your order number and what the machine does.",
+      "Write to us with your order number and what the machine does.",
       "We reply within 24 hours, Monday to Friday.",
       "We repair or replace the machine and pay for shipping both ways.",
     ],
@@ -162,10 +391,22 @@ export const HELP_GUIDES: GuideItem[] = [
       {
         heading: "After each coffee",
         text: "Knock the used coffee out of the basket, rinse the basket under the tap and wipe the rim of the portafilter dry.",
+        picture: {
+          src: "/images/home/faq-loud.jpg",
+          alt: "Espresso pouring from the portafilter into a white cup",
+          width: 1200,
+          height: 900,
+        },
       },
       {
         heading: "After steaming milk",
         text: "On the Duo and the Pro, wipe the steam wand with a damp cloth straight away, then open it for a second to blow out the milk inside. Dried milk blocks the tip.",
+        picture: {
+          src: "/images/home/jug.png",
+          alt: "Milk jug",
+          width: 333,
+          height: 400,
+        },
       },
       {
         heading: "At the end of the day",
@@ -174,6 +415,12 @@ export const HELP_GUIDES: GuideItem[] = [
           "Empty and rinse the drip tray",
           "Wipe the steel with a dry cloth",
         ],
+        picture: {
+          src: "/images/product/tamper.jpg",
+          alt: "Tamper",
+          width: 800,
+          height: 800,
+        },
       },
     ],
     steps: [
@@ -194,6 +441,12 @@ export const HELP_GUIDES: GuideItem[] = [
       {
         heading: "What you need",
         text: "A blind basket, which is a basket with no holes. Any 58 mm blind basket fits. Once a month you also need espresso machine cleaner.",
+        picture: {
+          src: "/images/home/details-portafilter-3d.png",
+          alt: "The portafilter with its walnut handle",
+          width: 871,
+          height: 909,
+        },
       },
       {
         heading: "Why it matters",
@@ -218,6 +471,12 @@ export const HELP_GUIDES: GuideItem[] = [
       {
         heading: "Why it matters",
         text: "Hard water leaves scale in the boiler and the pipes. Over time it slows the water and the machine heats less evenly.",
+        picture: {
+          src: "/images/home/faq-warranty.jpg",
+          alt: "The machine's boiler and pump",
+          width: 1200,
+          height: 900,
+        },
       },
       {
         heading: "How often",
@@ -231,11 +490,15 @@ export const HELP_GUIDES: GuideItem[] = [
         heading: "What to use",
         text: "A descaler made for espresso machines. Not vinegar, which leaves a taste and wears the seals.",
       },
+      {
+        heading: "Scale and the warranty",
+        text: "The warranty does not cover damage from limescale, so descaling on time keeps the machine covered.",
+      },
     ],
     steps: [
       "Mix the descaler with water in the tank, as its pack says.",
       "Switch the machine on and let it warm up.",
-      "Run half the tank through with the portafilter out.",
+      "Run half the tank through with the portafilter out. On the Duo and the Pro, run a cup's worth through the steam wand too.",
       "Wait 20 minutes, then run the rest through.",
       "Rinse the tank and run two full tanks of fresh water through.",
     ],
@@ -251,10 +514,20 @@ export const HELP_GUIDES: GuideItem[] = [
       {
         heading: "Use filtered water",
         text: "Water from a filter jug leaves less scale and makes cleaner-tasting coffee. Change the jug's filter when its maker says, usually every 4 weeks.",
+        picture: {
+          src: "/images/home/faq-warmup.jpg",
+          alt: "The front of the machine with its pressure gauge",
+          width: 1200,
+          height: 900,
+        },
       },
       {
         heading: "Not distilled water",
         text: "The machine needs some minerals in the water to sense how full the boiler is, and coffee made with distilled water tastes flat.",
+      },
+      {
+        heading: "Refill each morning",
+        text: "Empty the tank and refill it each day. Water left standing goes stale, and so does the coffee made with it.",
       },
     ],
     steps: [
@@ -275,10 +548,24 @@ export const HELP_GUIDES: GuideItem[] = [
       {
         heading: "Why it matters",
         text: "Old grounds and coffee oil stick to the burrs, the two steel rings that grind the beans. They make the grind uneven and the coffee taste stale.",
+        picture: {
+          src: "/images/home/grinder.png",
+          alt: "Nove grinder",
+          width: 800,
+          height: 800,
+        },
       },
       {
         heading: "Note your setting first",
         text: "The grinder has 40 settings. Write down the one you use, so you can set it back after cleaning.",
+      },
+      {
+        heading: "Keep it dry",
+        bullets: [
+          "Use a dry brush, never water",
+          "Wet burrs rust",
+          "Grinder cleaning tablets once a month are fine",
+        ],
       },
     ],
     steps: [
