@@ -1,123 +1,159 @@
 "use client"
 
-import { useState } from "react"
-import { Check } from "lucide-react"
+import { useRef, useState } from "react"
 
-import { SectionLabel } from "@/components/shared/section-label"
+import { pillButton } from "@/lib/pill-variants"
+import { cn } from "@/lib/utils"
+
+import { CONTACT_EMAIL, CONTACT_ERRORS, REPLY_TIME } from "./contact-data"
+import { ContactField, FIELD_CONTROL } from "./contact-field"
+import { ContactFormSent } from "./contact-form-sent"
+import { ContactMachineSelect } from "./contact-machine-select"
+import { CopyEmailButton } from "./copy-email-button"
+
+const EMPTY = { name: "", email: "", machine: "", message: "" }
+type Values = typeof EMPTY
+type Errors = Partial<Record<keyof Values, string>>
+
+function validate(values: Values): Errors {
+  const errors: Errors = {}
+  if (!values.name.trim()) errors.name = CONTACT_ERRORS.name
+  const email = values.email.trim()
+  if (!email) errors.email = CONTACT_ERRORS.email
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    errors.email = CONTACT_ERRORS.emailFormat
+  if (!values.message.trim()) errors.message = CONTACT_ERRORS.message
+  return errors
+}
 
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false)
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "Choosing a machine",
-    message: "",
-  })
+  const formRef = useRef<HTMLFormElement>(null)
+  const [values, setValues] = useState<Values>(EMPTY)
+  const [errors, setErrors] = useState<Errors>({})
+  const [sent, setSent] = useState<Values | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
+  const update = (field: keyof Values) => (value: string) => {
+    setValues((prev) => ({ ...prev, [field]: value }))
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }))
   }
 
+  function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const found = validate(values)
+    setErrors(found)
+    const first = Object.keys(found)[0]
+    if (first) {
+      formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
+      return
+    }
+    setSent(values)
+    setValues(EMPTY)
+  }
+
+  const invalid = (field: keyof Values) => ({
+    "aria-invalid": errors[field] ? true : undefined,
+    "aria-describedby": errors[field] ? `contact-${field}-error` : undefined,
+  })
+
   return (
-    <section id="form" className="bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <div className="mx-auto max-w-xl">
-          <SectionLabel>Direct Message</SectionLabel>
-          <h2 className="mt-2 text-3xl font-light tracking-tight text-foreground md:text-4xl">
-            Send us a message
+    <div className="grid">
+      <form
+        ref={formRef}
+        noValidate
+        onSubmit={onSubmit}
+        inert={sent ? true : undefined}
+        className={cn("col-start-1 row-start-1", sent ? "invisible" : null)}
+      >
+        <header>
+          <h2 id="form-heading" className="text-3xl">
+            Write to us
           </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {`We reply within ${REPLY_TIME}, Monday to Friday.`}
+          </p>
+        </header>
 
-          {submitted ? (
-            <div className="mt-8 rounded-2xl border border-border bg-card p-8 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background">
-                <Check className="h-6 w-6" />
-              </div>
-              <h3 className="mt-4 text-xl font-medium">Message received</h3>
-              <p className="mt-2 text-sm font-light text-muted-foreground">
-                Thank you, {formData.name}. Matteo or Davide will reply to{" "}
-                {formData.email} within 24 hours.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-              <div>
-                <label className="block font-mono text-xs text-muted-foreground uppercase">
-                  Your name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="e.g. Elena Rossi"
-                  className="mt-1.5 w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm focus:border-foreground focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block font-mono text-xs text-muted-foreground uppercase">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  placeholder="elena@example.com"
-                  className="mt-1.5 w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm focus:border-foreground focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block font-mono text-xs text-muted-foreground uppercase">
-                  Topic
-                </label>
-                <select
-                  value={formData.subject}
-                  onChange={(e) =>
-                    setFormData({ ...formData, subject: e.target.value })
-                  }
-                  className="mt-1.5 w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm focus:border-foreground focus:outline-none"
-                >
-                  <option>Choosing a machine (One vs Duo vs Pro)</option>
-                  <option>Book a showroom visit in Turin</option>
-                  <option>Warranty, swap, or maintenance</option>
-                  <option>Beans subscription questions</option>
-                  <option>Other question</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block font-mono text-xs text-muted-foreground uppercase">
-                  Message
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
-                  placeholder="Tell us about the coffee you drink at home..."
-                  className="mt-1.5 w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm focus:border-foreground focus:outline-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-foreground text-base font-medium text-background transition-opacity hover:opacity-90"
-              >
-                Send message to Matteo & Davide
-              </button>
-            </form>
-          )}
+        <div className="mt-8 flex w-full flex-col gap-5">
+          <ContactField id="contact-name" label="Name" error={errors.name}>
+            <input
+              id="contact-name"
+              name="name"
+              autoComplete="name"
+              placeholder="Your name"
+              value={values.name}
+              onChange={(e) => update("name")(e.target.value)}
+              className={cn(FIELD_CONTROL, "h-11 rounded-full px-4 py-1")}
+              {...invalid("name")}
+            />
+          </ContactField>
+          <ContactField id="contact-email" label="Email" error={errors.email}>
+            <input
+              id="contact-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={values.email}
+              onChange={(e) => update("email")(e.target.value)}
+              className={cn(FIELD_CONTROL, "h-11 rounded-full px-4 py-1")}
+              {...invalid("email")}
+            />
+          </ContactField>
+          <ContactField id="contact-machine" label="Which machine do you have?">
+            <ContactMachineSelect
+              id="contact-machine"
+              value={values.machine}
+              onChange={update("machine")}
+            />
+          </ContactField>
+          <ContactField
+            id="contact-message"
+            label="Message"
+            error={errors.message}
+          >
+            <textarea
+              id="contact-message"
+              name="message"
+              placeholder="Ask about a model, an order or a repair"
+              value={values.message}
+              onChange={(e) => update("message")(e.target.value)}
+              className={cn(
+                FIELD_CONTROL,
+                "flex field-sizing-content min-h-36 resize-none rounded-2xl px-4 py-3"
+              )}
+              {...invalid("message")}
+            />
+          </ContactField>
         </div>
-      </div>
-    </section>
+
+        <button
+          type="submit"
+          className={pillButton({
+            variant: "accent",
+            className: "mt-7 w-full",
+          })}
+        >
+          Send message
+        </button>
+        <p className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted-foreground">
+          Or email us at
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="rounded-sm text-foreground underline decoration-foreground/30 underline-offset-4 transition-[text-decoration-color] duration-200 ease-soft outline-none hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            {CONTACT_EMAIL}
+          </a>
+          <CopyEmailButton value={CONTACT_EMAIL} />
+        </p>
+      </form>
+
+      {sent ? (
+        <ContactFormSent
+          name={sent.name}
+          email={sent.email}
+          onAgain={() => setSent(null)}
+        />
+      ) : null}
+    </div>
   )
 }

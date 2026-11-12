@@ -1,21 +1,27 @@
 import type { Metadata } from "next"
 
+import { NavSpacer } from "@/components/shared/nav-spacer"
 import { AboutHero } from "@/components/features/about/about-hero"
-import { AboutDesignPillars } from "@/components/features/about/design-pillars"
-import { AboutStoryTimeline } from "@/components/features/about/story-timeline"
+import { AboutStory } from "@/components/features/about/about-story"
+import { AboutBuilt } from "@/components/features/about/about-built"
+import { AboutFounders } from "@/components/features/about/about-founders"
+import { AboutPick } from "@/components/features/about/about-pick"
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Our story",
   description:
-    "The story of Nove espresso machines, built in Turin, Italy. 9 bar pressure, 58 mm portafilter, and repairable steel design.",
+    "Nove is a barista and an engineer in Turin who have made one espresso machine, in three models, since 2019.",
 }
 
 export default function AboutPage() {
   return (
     <>
+      <NavSpacer />
       <AboutHero />
-      <AboutDesignPillars />
-      <AboutStoryTimeline />
+      <AboutStory />
+      <AboutBuilt />
+      <AboutFounders />
+      <AboutPick />
     </>
   )
 }

@@ -1,53 +1,93 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { SectionLabel } from "@/components/shared/section-label"
-import { buttonVariants } from "@/components/ui/button"
+import { NavSpacer } from "@/components/shared/nav-spacer"
+import { PageIntro } from "@/components/shared/page-intro"
+import { ParallaxImage } from "@/components/shared/parallax-image"
+import { ScrollReveal } from "@/components/shared/scroll-reveal"
+import { pillBadge, pillButton } from "@/lib/pill-variants"
 
-const BASE = "https://nove-nextjs-template.vercel.app"
+const FOUNDERS = [
+  {
+    src: "/images/home/founder-1.jpg",
+    alt: "Portrait of a smiling barista in a grey apron",
+  },
+  {
+    src: "/images/home/founder-2.jpg",
+    alt: "Portrait of an engineer with crossed arms in a workshop",
+  },
+]
 
 export function ShowroomHero() {
   return (
-    <section className="border-b border-border bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <div className="max-w-3xl">
-          <SectionLabel>Showroom · Turin</SectionLabel>
-          <h1 className="mt-2 text-4xl font-light tracking-tight text-foreground sm:text-6xl md:text-7xl">
-            Try all three models in Turin
-          </h1>
-          <p className="mt-6 text-base leading-relaxed font-light text-muted-foreground sm:text-xl">
-            The One, the Duo and the Pro stand switched on along one counter on
-            Via Nizza. A visit is free and takes 45 minutes with Matteo or
-            Davide.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/contact#form"
-              className={buttonVariants({ variant: "default", size: "lg" })}
-            >
-              Book a visit
-            </Link>
-            <a
-              href="#info"
-              className={buttonVariants({ variant: "outline", size: "lg" })}
-            >
-              Address and hours
-            </a>
-          </div>
+    <section
+      aria-labelledby="showroom-heading"
+      className="px-3 section-padding pt-0! md:px-5"
+    >
+      <NavSpacer className="gutter-margin-0 md:gutter-margin-0" />
+      <PageIntro
+        id="showroom-heading"
+        lines={["Try all three", "models in Turin"]}
+        lede="The One, the Duo and the Pro stand switched on along one counter. A visit is free and takes 45 minutes."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/contact#form"
+            className={pillButton({ variant: "accent" })}
+          >
+            Book a visit
+          </Link>
+          <Link
+            href="/showroom#visit"
+            className={pillButton({ variant: "outline" })}
+          >
+            Address and hours
+          </Link>
         </div>
+      </PageIntro>
 
-        {/* Large Hero Photo */}
-        <div className="relative mt-12 aspect-16/9 w-full overflow-hidden rounded-3xl bg-muted">
-          <Image
-            src={`${BASE}/images/showroom/visitors.jpg`}
-            alt="Visitors at the showroom counter trying machines"
-            fill
-            priority
+      <div className="mt-10 md:mt-14">
+        <ScrollReveal
+          delayMs={250}
+          className="relative isolate flex min-h-120 flex-col justify-between overflow-hidden rounded-3xl gutter-4 py-4 md:min-h-[clamp(34rem,68svh,48rem)] md:gutter-6 md:py-6"
+        >
+          <ParallaxImage
+            src="/images/showroom/visitors.jpg"
+            alt="Visitors at the showroom counter: a young man laughing on a stool with a cup, a woman in a camel coat chatting with the barista as she steams milk at the Duo, an older man leaning in to read the gauges on the Pro, the One beside them"
             sizes="100vw"
-            className="object-cover"
+            priority
           />
-        </div>
+          <div className="self-end rounded-full bg-popover/80 py-1 pr-3 pl-1 backdrop-blur-md">
+            <div className="flex items-center gap-3 text-sm text-foreground">
+              <div className="flex -space-x-2">
+                {FOUNDERS.map((person) => (
+                  <span
+                    key={person.src}
+                    className="relative flex size-8 shrink-0 rounded-full ring-2 ring-background select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken"
+                  >
+                    <Image
+                      src={person.src}
+                      alt={person.alt}
+                      width={64}
+                      height={64}
+                      className="aspect-square size-full rounded-full object-cover"
+                    />
+                  </span>
+                ))}
+              </div>
+              The two of us, at the counter
+            </div>
+          </div>
+          <ul className="flex flex-wrap gap-2">
+            {["One", "Duo", "Pro"].map((model) => (
+              <li key={model}>
+                <span className={pillBadge({ variant: "floating" })}>
+                  {model}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </ScrollReveal>
       </div>
     </section>
   )

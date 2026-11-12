@@ -1,19 +1,23 @@
 import type { Metadata } from "next"
 
+import { NavSpacer } from "@/components/shared/nav-spacer"
 import { ContactOptions } from "@/components/features/contact/contact-options"
-import { ContactForm } from "@/components/features/contact/contact-form"
+import { ContactFormSection } from "@/components/features/contact/contact-form-section"
+import { HomeFaqSection } from "@/components/features/home/faq-section"
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Talk directly with the makers of Nove in Turin. Email, live chat, or book a 20-minute video consultation.",
+    "Write to Nove, ask for a call with the founders or visit the showroom in Turin. We reply within 1 working day.",
 }
 
 export default function ContactPage() {
   return (
     <>
+      <NavSpacer />
       <ContactOptions />
-      <ContactForm />
+      <ContactFormSection />
+      <HomeFaqSection />
     </>
   )
 }

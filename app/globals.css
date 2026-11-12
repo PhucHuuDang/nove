@@ -49,6 +49,7 @@
 }
 
 :root {
+  --bleed: max(0px, calc((100vw - 128rem) / 2));
   --background: lab(96.7639% 0.224769 1.5044);
   --foreground: lab(7.22121% 0.833631 1.86806);
   --card: lab(92.4776% 0.341237 2.25915);
@@ -124,6 +125,11 @@
 
 @utility weight-display {
   font-weight: 500;
+}
+
+@utility display-type {
+  font-weight: 500;
+  letter-spacing: -0.015em;
 }
 
 @utility ease-soft {
@@ -218,48 +224,14 @@
 
 @utility panel-padding {
   padding-block: 3rem;
-  padding-inline: 1.25rem;
+  padding-inline: calc(var(--bleed, 0px) + 1.25rem);
   @media (min-width: 48rem) {
     padding-block: 4rem;
-    padding-inline: 2rem;
+    padding-inline: calc(var(--bleed, 0px) + 2rem);
   }
   @media (min-width: 64rem) {
     padding-block: 5rem;
-    padding-inline: 2.5rem;
-  }
-}
-
-@utility h-208 {
-  height: 52rem;
-}
-
-@utility mask-y-from-85% {
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
-}
-
-@utility panel-padding {
-  padding-block: 3rem;
-  padding-inline: 1.25rem;
-  @media (min-width: 48rem) {
-    padding-block: 4rem;
-    padding-inline: 2rem;
-  }
-  @media (min-width: 64rem) {
-    padding-block: 5rem;
-    padding-inline: 2.5rem;
+    padding-inline: calc(var(--bleed, 0px) + 2.5rem);
   }
 }
 
