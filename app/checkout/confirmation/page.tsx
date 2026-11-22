@@ -13,9 +13,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
+interface ConfirmationPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
 export default async function ConfirmationPage({
   searchParams,
-}: PageProps<"/checkout/confirmation">) {
+}: ConfirmationPageProps) {
   const { order } = await searchParams
   const orderNumber = typeof order === "string" ? order : undefined
 
