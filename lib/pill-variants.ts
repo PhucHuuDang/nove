@@ -25,6 +25,7 @@ const pillButtonRecipe = cva(
         default:
           "h-11 gap-2 px-6 has-data-[icon=inline-end]:pe-5 has-data-[icon=inline-start]:ps-5",
         sm: "h-9 gap-1.5 px-4 has-data-[icon=inline-end]:pe-3.5 has-data-[icon=inline-start]:ps-3.5",
+        lg: "h-13 gap-2 px-8 text-base has-data-[icon=inline-end]:pe-7 has-data-[icon=inline-start]:ps-7",
         icon: "size-11",
         "icon-sm": "size-9",
       },

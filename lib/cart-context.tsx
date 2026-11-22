@@ -8,12 +8,17 @@ import {
   useState,
   useSyncExternalStore,
 } from "react"
+import { catalogProduct, toCartItem } from "@/lib/data/catalog"
 import type { CartContextValue, CartItem } from "@/types/cart"
 
 const STORAGE_KEY = "nove:bag"
 const CHANGE_EVENT = "nove:bag:change"
 
-const DEFAULT_ITEMS: CartItem[] = []
+/** A first visit opens with the Duo and the grinder in the bag. */
+const DEFAULT_ITEMS: CartItem[] = (["duo", "grinder"] as const).map((id) => ({
+  ...toCartItem(catalogProduct(id)),
+  qty: 1,
+}))
 
 let cachedRaw: string | null = null
 let cachedItems: CartItem[] = DEFAULT_ITEMS
@@ -86,6 +91,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [items]
   )
 
+  const addMissing = useCallback(
+    (additions: Omit<CartItem, "qty">[]) => {
+      const missing = additions.filter(
+        (addition) => !items.some((i) => i.slug === addition.slug)
+      )
+      setStoredItems([
+        ...items,
+        ...missing.map((addition) => ({ ...addition, qty: 1 })),
+      ])
+    },
+    [items]
+  )
+
   const removeItem = useCallback(
     (slug: string) => {
       setStoredItems(items.filter((i) => i.slug !== slug))
@@ -129,6 +147,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       openBag,
       closeBag,
       addItem,
+      addMissing,
       removeItem,
       updateQty,
       clearCart,
@@ -141,6 +160,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       openBag,
       closeBag,
       addItem,
+      addMissing,
       removeItem,
       updateQty,
       clearCart,

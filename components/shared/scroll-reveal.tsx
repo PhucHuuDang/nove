@@ -9,6 +9,7 @@ interface ScrollRevealProps {
   delayMs?: number
   as?: React.ElementType
   style?: React.CSSProperties
+  id?: string
 }
 
 export function ScrollReveal({
@@ -17,6 +18,7 @@ export function ScrollReveal({
   delayMs = 0,
   as: Component = "div",
   style,
+  id,
 }: ScrollRevealProps) {
   const [reveal, setReveal] = useState<"pending" | "hidden" | "shown">(
     "pending"
@@ -46,6 +48,7 @@ export function ScrollReveal({
   return (
     <Component
       ref={ref}
+      id={id}
       data-reveal={reveal}
       style={{
         ...(delayMs ? { transitionDelay: `${delayMs}ms` } : {}),

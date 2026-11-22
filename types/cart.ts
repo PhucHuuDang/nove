@@ -20,6 +20,8 @@ export interface CartContextValue extends CartState {
   openBag: () => void
   closeBag: () => void
   addItem: (item: Omit<CartItem, "qty">) => void
+  /** Adds each item that is not in the bag yet, leaving the rest untouched. */
+  addMissing: (items: Omit<CartItem, "qty">[]) => void
   removeItem: (slug: string) => void
   updateQty: (slug: string, qty: number) => void
   clearCart: () => void

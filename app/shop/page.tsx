@@ -1,13 +1,12 @@
 import type { Metadata } from "next"
 
+import { ShopBundle } from "@/components/features/shop/shop-bundle"
+import { ShopCatalog } from "@/components/features/shop/shop-catalog"
+import { ShopCompare } from "@/components/features/shop/shop-compare"
+import { ShopHero } from "@/components/features/shop/shop-hero"
+import { ShopPromiseBar } from "@/components/features/shop/shop-promise-bar"
+import { NavSpacer } from "@/components/shared/nav-spacer"
 import { pageMetadata } from "@/lib/seo"
-
-import { ShopHeroSection } from "@/components/features/shop/hero-section"
-import { ShopMachinesGrid } from "@/components/features/shop/machines-grid"
-import { ShopAccessoriesGrid } from "@/components/features/shop/accessories-grid"
-import { ShopBeansGrid } from "@/components/features/shop/beans-grid"
-import { ShopCompareTable } from "@/components/features/shop/compare-table"
-import { ShopBundleDeal } from "@/components/features/shop/bundle-deal"
 
 export const metadata: Metadata = pageMetadata({
   title: "Shop",
@@ -18,15 +17,18 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ShopPage() {
   return (
-    <div className="mx-auto max-w-7xl gutter-3 pb-16 md:gutter-5 md:pb-24">
-      <ShopHeroSection />
-      <div className="mt-16 flex flex-col gap-16 md:mt-24 md:gap-24">
-        <ShopMachinesGrid />
-        <ShopAccessoriesGrid />
-        <ShopBeansGrid />
-        <ShopCompareTable />
-        <ShopBundleDeal />
-      </div>
-    </div>
+    <>
+      <NavSpacer />
+      <section
+        aria-labelledby="shop-heading"
+        className="gutter-3 section-padding pt-6! md:gutter-5 md:pt-8! lg:pt-10!"
+      >
+        <ShopHero />
+        <ShopPromiseBar />
+        <ShopCatalog />
+        <ShopCompare />
+        <ShopBundle />
+      </section>
+    </>
   )
 }

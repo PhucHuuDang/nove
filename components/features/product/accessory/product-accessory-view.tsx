@@ -7,6 +7,7 @@ import { AccessoryUseWith } from "./accessory-use-with"
 import { AccessoryBottomCta } from "./accessory-bottom-cta"
 import { ProductOwnersSection } from "@/components/features/product/owners/product-owners-section"
 import { ProductFaqSection } from "@/components/features/product/faq/product-faq-section"
+import { catalogProduct, type CatalogId } from "@/lib/data/catalog"
 
 interface ProductAccessoryViewProps {
   product: Product
@@ -134,7 +135,7 @@ export function ProductAccessoryView({ product }: ProductAccessoryViewProps) {
       <AccessoryUseWith items={product.useWith} />
       <ProductOwnersSection owners={owners} />
       <ProductFaqSection questions={questions} />
-      <AccessoryBottomCta product={product} />
+      <AccessoryBottomCta product={catalogProduct(product.slug as CatalogId)} />
     </>
   )
 }

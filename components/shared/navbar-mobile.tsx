@@ -12,29 +12,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-interface NavLink {
-  href: string
-  label: string
-}
+import {
+  PAGE_LINKS as SIDEBAR_LINKS,
+  SHOP_SECTIONS as SUB_PILLS,
+  type NavLink,
+} from "@/lib/data/navigation"
 
 interface NavbarMobileProps {
   links?: NavLink[]
   triggerLabel?: string
 }
-
-const SUB_PILLS = [
-  { href: "/shop#machines", label: "Models" },
-  { href: "/shop#add-ons", label: "Add-ons" },
-  { href: "/shop#beans", label: "Beans" },
-]
-
-const SIDEBAR_LINKS: NavLink[] = [
-  { href: "/about", label: "Our story" },
-  { href: "/showroom", label: "Showroom" },
-  { href: "/journal", label: "Journal" },
-  { href: "/help", label: "Help" },
-  { href: "/contact", label: "Contact" },
-]
 
 export function NavbarMobile({ triggerLabel }: NavbarMobileProps) {
   const triggerButton = triggerLabel ? (
@@ -64,7 +51,6 @@ export function NavbarMobile({ triggerLabel }: NavbarMobileProps) {
         side="right"
         className="w-3/4 sm:max-w-sm"
         showCloseButton={true}
-        closeButtonLabel="Close menu"
       >
         <SheetHeader className="p-6">
           <SheetTitle className="text-2xl font-normal text-foreground">

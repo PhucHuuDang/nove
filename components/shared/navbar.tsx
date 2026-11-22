@@ -10,6 +10,8 @@ import { useCart } from "@/lib/cart-context"
 import { CartDrawer } from "@/components/shared/cart-drawer"
 import { NavbarMobile } from "@/components/shared/navbar-mobile"
 import { NavbarCompactMenu } from "@/components/shared/navbar-compact-menu"
+import { NavbarShopMenu } from "@/components/shared/navbar-shop-menu"
+import { MAIN_NAV, PAGE_LINKS } from "@/lib/data/navigation"
 import { cn } from "@/lib/utils"
 
 const SPRING_TRANSITION = {
@@ -17,23 +19,6 @@ const SPRING_TRANSITION = {
   duration: 0.8,
   bounce: 0.1,
 }
-
-const MENU_ITEMS = [
-  {
-    href: "/shop",
-    label: "Shop",
-    children: [
-      { href: "/shop#machines", label: "Models" },
-      { href: "/shop#add-ons", label: "Add-ons" },
-      { href: "/shop#beans", label: "Beans" },
-    ],
-  },
-  { href: "/about", label: "Our story" },
-  { href: "/showroom", label: "Showroom" },
-  { href: "/journal", label: "Journal" },
-  { href: "/help", label: "Help" },
-  { href: "/contact", label: "Contact" },
-]
 
 interface NavSlotState {
   top: number
@@ -142,11 +127,12 @@ export function Navbar() {
             className="relative flex max-w-max flex-1 items-center justify-center"
           >
             <ul className="flex flex-1 list-none items-center justify-center gap-8">
-              {MENU_ITEMS.map(({ href, label }) => (
+              <NavbarShopMenu />
+              {PAGE_LINKS.map(({ href, label }) => (
                 <li key={href} className="relative">
                   <Link
                     href={href}
-                    className="inline-block rounded-sm py-2 text-sm font-medium whitespace-nowrap underline decoration-transparent decoration-1 underline-offset-6 transition-[text-decoration-color,color] duration-300 ease-soft outline-none hover:decoration-current focus-visible:ring-3 focus-visible:ring-ring/50"
+                    className="inline-block rounded-sm py-2 font-medium whitespace-nowrap underline decoration-transparent decoration-1 underline-offset-6 transition-[text-decoration-color,color] duration-300 ease-soft outline-none hover:decoration-current focus-visible:ring-3 focus-visible:ring-ring/50"
                   >
                     {label}
                   </Link>
@@ -227,7 +213,7 @@ export function Navbar() {
       <NavbarCompactMenu
         open={compactOpen && isDocked}
         onClose={() => setCompactOpen(false)}
-        items={MENU_ITEMS}
+        items={MAIN_NAV}
         triggerRef={triggerRef}
       />
     </motion.header>

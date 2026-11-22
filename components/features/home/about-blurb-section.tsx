@@ -4,8 +4,6 @@ import Link from "next/link"
 import { SectionLabel } from "@/components/shared/section-label"
 import { buttonVariants } from "@/components/ui/button"
 
-const BASE = "https://nove-nextjs-template.vercel.app"
-
 export function AboutBlurbSection() {
   return (
     <section className="border-b border-border bg-background py-16 md:py-24">
@@ -15,7 +13,7 @@ export function AboutBlurbSection() {
           <div className="grid grid-cols-2 gap-4 lg:col-span-5">
             <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-muted">
               <Image
-                src={`${BASE}/images/home/founder-1.jpg`}
+                src={"/images/home/founder-1.jpg"}
                 alt="Matteo, co-founder of Nove"
                 fill
                 sizes="(max-width: 1024px) 50vw, 300px"
@@ -24,7 +22,7 @@ export function AboutBlurbSection() {
             </div>
             <div className="relative mt-8 aspect-3/4 overflow-hidden rounded-2xl bg-muted">
               <Image
-                src={`${BASE}/images/home/founder-2.jpg`}
+                src={"/images/home/founder-2.jpg"}
                 alt="Davide, co-founder of Nove"
                 fill
                 sizes="(max-width: 1024px) 50vw, 300px"

@@ -7,6 +7,9 @@ import { ChevronRight, Truck, Check } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import type { Product } from "@/types/product"
 
+/** Horizontal focus (%) of each in-use photo, so the product stays in frame. */
+const PHOTO_FOCUS_X: Record<string, number> = { grinder: 100, jug: 72 }
+
 interface AccessoryHeroProps {
   product: Product
 }
@@ -156,36 +159,41 @@ export function AccessoryHero({ product }: AccessoryHeroProps) {
 
         {/* Right Column: In-use Photo Card */}
         <div className="relative aspect-4/5 overflow-hidden rounded-3xl bg-card md:aspect-4/3 lg:aspect-auto lg:h-full">
-          {product.inUseImage ? (
-            <Image
-              src={product.inUseImage}
-              alt={product.name}
-              fill
-              sizes="(min-width: 64rem) 50vw, 100vw"
-              className="object-cover"
-              priority
-            />
-          ) : null}
-          <div className="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-background/90 via-background/50 to-transparent" />
-          <div className="absolute inset-x-6 bottom-14 text-center lg:bottom-18">
-            <p className="text-3xl leading-tight md:text-4xl">
-              {isGrinder ? (
-                <>
-                  <span className="font-mono figures">40</span> settings
-                </>
-              ) : isJug ? (
-                <span className="font-mono figures">350 ml</span>
-              ) : (
-                <span className="font-mono figures">250 g</span>
-              )}
-            </p>
-            <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground md:text-base">
-              {isGrinder
-                ? "Turn the walnut dial to set the grind"
-                : isJug
-                  ? "Enough milk for one or two drinks"
-                  : "Pause or stop any time"}
-            </p>
+          <div className="dark absolute inset-0 text-foreground">
+            {product.inUseImage ? (
+              <Image
+                src={product.inUseImage}
+                alt={product.name}
+                fill
+                sizes="(min-width: 64rem) 48vw, 95vw"
+                className="object-cover"
+                style={{
+                  objectPosition: `${PHOTO_FOCUS_X[product.slug] ?? 50}% 50%`,
+                }}
+                priority
+              />
+            ) : null}
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-background/90 via-background/50 to-transparent" />
+            <div className="absolute inset-x-6 bottom-14 text-center lg:bottom-18">
+              <p className="text-3xl leading-tight md:text-4xl">
+                {isGrinder ? (
+                  <>
+                    <span className="font-mono figures">40</span> settings
+                  </>
+                ) : isJug ? (
+                  <span className="font-mono figures">350 ml</span>
+                ) : (
+                  <span className="font-mono figures">250 g</span>
+                )}
+              </p>
+              <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground md:text-base">
+                {isGrinder
+                  ? "Turn the walnut dial to set the grind"
+                  : isJug
+                    ? "Enough milk for one or two drinks"
+                    : "Pause or stop any time"}
+              </p>
+            </div>
           </div>
         </div>
       </div>

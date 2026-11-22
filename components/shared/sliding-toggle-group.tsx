@@ -28,6 +28,9 @@ const PILL: Record<Variant, string> = {
   filled: "-inset-px bg-primary",
 }
 
+/** Compact items; overrides the variant's default height and padding. */
+const SMALL_ITEM = "h-9 min-w-9 px-4"
+
 const SLIDE = { type: "spring" as const, duration: 0.4, bounce: 0.15 }
 
 interface SlidingToggleGroupProps {
@@ -36,7 +39,9 @@ interface SlidingToggleGroupProps {
   value: string
   options: { value: string; label: React.ReactNode }[]
   onValueChange: (value: string) => void
+  size?: "default" | "sm"
   className?: string
+  itemClassName?: string
 }
 
 /** Single-select pill group whose active background slides between items. */
@@ -46,7 +51,9 @@ export function SlidingToggleGroup({
   value,
   options,
   onValueChange,
+  size = "default",
   className,
+  itemClassName,
 }: SlidingToggleGroupProps) {
   const pillId = useId()
   const refs = useRef<(HTMLButtonElement | null)[]>([])
@@ -87,7 +94,12 @@ export function SlidingToggleGroup({
             tabIndex={on ? 0 : -1}
             onClick={() => onValueChange(option.value)}
             onKeyDown={(event) => onKeyDown(event, i)}
-            className={cn(ITEM_BASE, ITEM[variant])}
+            className={cn(
+              ITEM_BASE,
+              ITEM[variant],
+              size === "sm" && SMALL_ITEM,
+              itemClassName
+            )}
           >
             {on ? (
               <motion.span
