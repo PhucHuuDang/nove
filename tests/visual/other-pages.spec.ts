@@ -89,7 +89,11 @@ test.describe("Content Pages", () => {
     await page.goto("/legal/terms")
     await expect(page).toHaveTitle(/Terms of sale · Nove/)
     await expect(page.locator("h1")).toContainText("Terms of sale")
-    await expect(page.getByText("Who you buy from")).toBeVisible()
-    await expect(page.getByText("Which law applies")).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Who you buy from" })
+    ).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Which law applies" })
+    ).toBeVisible()
   })
 })

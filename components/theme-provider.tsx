@@ -3,6 +3,22 @@
 import * as React from "react"
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes"
 
+// Suppress the React 19 false-positive warning for next-themes inline script
+if (process.env.NODE_ENV === "development") {
+  const originalConsoleError = console.error
+  console.error = (...args: unknown[]) => {
+    if (
+      args.some(
+        (arg) =>
+          typeof arg === "string" && arg.includes("Encountered a script tag")
+      )
+    ) {
+      return
+    }
+    originalConsoleError.apply(console, args)
+  }
+}
+
 function ThemeProvider({
   children,
   ...props

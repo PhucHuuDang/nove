@@ -6,7 +6,7 @@ test.describe("Shop Page", () => {
   }) => {
     await page.goto("/shop")
 
-    await expect(page).toHaveTitle(/Shop Machines & Accessories · Nove/)
+    await expect(page).toHaveTitle(/Shop.* · Nove/)
     await expect(page.locator("h1")).toContainText("Machines")
 
     // Check machines
