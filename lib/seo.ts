@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://novee-store.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://nove-nextjs-template.vercel.app"
 ).replace(/\/$/, "")
 
 export const SITE_NAME = "Nove"
@@ -23,7 +23,7 @@ interface PageSeo {
   /** Route path, e.g. "/shop". Used for the canonical and og:url. */
   path: string
   /** Defaults to the site-wide 1200×630 share image. */
-  image?: { url: string; alt: string }
+  image?: { url: string; width?: number; height?: number; alt: string }
   type?: "website" | "article"
 }
 
@@ -80,19 +80,22 @@ export const rootMetadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_US",
     images: [DEFAULT_IMAGE],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     site: "@nove.espresso",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [{ url: DEFAULT_IMAGE.url, alt: DEFAULT_IMAGE.alt }],
+    images: [DEFAULT_IMAGE],
   },
   icons: {
     shortcut: "/favicon/favicon.ico",
