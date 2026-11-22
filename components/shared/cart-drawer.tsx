@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "motion/react"
+import { bagSaving } from "@/lib/cart-lines"
 import { useCart } from "@/lib/cart-context"
 import {
   Sheet,
@@ -56,11 +57,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
     addItem,
   } = useCart()
 
-  // Savings rule: If a machine, grinder, and beans are all present, 3 bags free ($54 saving)
-  const hasMachine = items.some((i) => ["one", "duo", "pro"].includes(i.slug))
-  const hasGrinder = items.some((i) => i.slug === "grinder")
-  const hasBeans = items.some((i) => i.slug === "beans" || i.slug === "origin")
-  const saving = hasMachine && hasGrinder && hasBeans ? 54 : 0
+  const saving = bagSaving(items)
   const finalTotal = Math.max(0, total - saving)
 
   const currentSlugs = items.map((i) => i.slug)

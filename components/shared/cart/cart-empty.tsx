@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ShoppingBag } from "lucide-react"
 
 interface CartEmptyProps {
-  onBrowse: () => void
+  onBrowse?: () => void
 }
 
 export function CartEmpty({ onBrowse }: CartEmptyProps) {

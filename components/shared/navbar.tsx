@@ -87,6 +87,7 @@ export function Navbar() {
 
   return (
     <motion.header
+      data-site-chrome
       layout
       transition={SPRING_TRANSITION}
       style={headerStyle}

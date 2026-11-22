@@ -11,7 +11,10 @@ export function Footer() {
   const hasMachine = pathname !== "/shop"
 
   return (
-    <footer className="group/footer px-3 pt-12 pb-3 md:px-5 md:pt-16 md:pb-5 lg:pt-24">
+    <footer
+      data-site-chrome
+      className="group/footer px-3 pt-12 pb-3 md:px-5 md:pt-16 md:pb-5 lg:pt-24"
+    >
       {hasMachine ? (
         <div data-machine="true" className="flex justify-center">
           <Image

@@ -11,6 +11,7 @@ export function TopBanner() {
 
   return (
     <aside
+      data-site-chrome
       aria-label="Announcement"
       className="dark relative grid grid-rows-[1fr] bg-background text-foreground opacity-100 transition-[grid-template-rows,opacity] duration-300 ease-soft"
     >

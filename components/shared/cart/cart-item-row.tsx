@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Minus, Plus } from "lucide-react"
 import { motion } from "motion/react"
 import type { CartItem } from "@/types/cart"
+import { lineNote } from "@/lib/cart-lines"
 
 interface CartItemRowProps {
   item: CartItem
@@ -13,26 +14,13 @@ interface CartItemRowProps {
   onClose: () => void
 }
 
-function getLineNote(item: CartItem): string {
-  if (item.note) return item.note
-  if (item.slug === "one") return "With portafilter and tamper"
-  if (item.slug === "duo" || item.slug === "pro")
-    return "With portafilter, tamper and milk jug"
-  if (item.slug === "grinder") return "Grinds fresh for every coffee"
-  if (item.slug === "origin") return "Light roast, fruity, best black"
-  if (item.slug === "beans") return "House roast, smooth and chocolatey"
-  if (item.slug === "decaf") return "Swiss water decaf, tastes like real coffee"
-  if (item.slug === "jug") return "350 ml, pours fine latte art"
-  return ""
-}
-
 export function CartItemRow({
   item,
   onRemove,
   onUpdateQty,
   onClose,
 }: CartItemRowProps) {
-  const note = getLineNote(item)
+  const note = lineNote(item)
   const isMachine =
     item.slug === "one" || item.slug === "duo" || item.slug === "pro"
 

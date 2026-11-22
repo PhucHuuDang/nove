@@ -369,6 +369,11 @@ body:has([data-page="not-found"])
   display: none;
 }
 
+/* Checkout brings its own header and footer, so the site chrome steps aside. */
+body:has([data-page="checkout"]) [data-site-chrome] {
+  display: none;
+}
+
 @utility raised-card {
   @apply border bg-popover shadow-xs;
 }

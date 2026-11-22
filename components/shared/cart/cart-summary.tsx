@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SETUP_SAVING_LABEL } from "@/lib/cart-lines"
 import { ProductHeroRollingText } from "@/components/features/product/hero/product-hero-rolling-text"
 
 interface CartSummaryProps {
@@ -26,9 +27,7 @@ export function CartSummary({
 
         {saving > 0 ? (
           <div className="flex justify-between gap-4">
-            <dt className="text-muted-foreground">
-              Beans, free for three months
-            </dt>
+            <dt className="text-muted-foreground">{SETUP_SAVING_LABEL}</dt>
             <dd className="font-mono text-foreground figures">
               −${saving.toLocaleString()}
             </dd>

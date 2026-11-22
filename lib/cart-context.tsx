@@ -8,7 +8,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react"
-import { catalogProduct, toCartItem } from "@/lib/data/catalog"
+import { CATALOG, catalogProduct, toCartItem } from "@/lib/data/catalog"
 import type { CartContextValue, CartItem } from "@/types/cart"
 
 const STORAGE_KEY = "nove:bag"
@@ -19,6 +19,22 @@ const DEFAULT_ITEMS: CartItem[] = (["duo", "grinder"] as const).map((id) => ({
   ...toCartItem(catalogProduct(id)),
   qty: 1,
 }))
+
+/**
+ * Rebuilds stored lines from the catalog, so a bag saved by an older build
+ * (or edited by hand) can never carry a stale price or an off-site image.
+ */
+function normalizeItems(stored: unknown[]): CartItem[] {
+  return stored.flatMap((entry) => {
+    if (!entry || typeof entry !== "object") return []
+    const { slug, qty, note } = entry as Partial<CartItem>
+    const product = CATALOG.find((p) => p.id === slug)
+    const count = Math.min(Math.max(Math.floor(Number(qty)) || 0, 0), 9)
+    if (!product || count < 1) return []
+    const item: CartItem = { ...toCartItem(product), qty: count }
+    return typeof note === "string" && note ? [{ ...item, note }] : [item]
+  })
+}
 
 let cachedRaw: string | null = null
 let cachedItems: CartItem[] = DEFAULT_ITEMS
@@ -31,7 +47,7 @@ function getSnapshot(): CartItem[] {
     if (raw) {
       const parsed = JSON.parse(raw)
       if (Array.isArray(parsed)) {
-        cachedItems = parsed
+        cachedItems = normalizeItems(parsed)
         return cachedItems
       }
     }
